@@ -4021,7 +4021,18 @@ void expenseTracker() {
   {
     id: 'intermediate-cpp',
     title: 'Object-Oriented Programming',
+    description: 'Learn OOP concepts, classes, inheritance, and polymorphism',
     level: 'intermediate',
+    duration: '8-10 weeks',
+    image: 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/c902507c-d2d9-4ac3-b37a-09ad25c2a7ac.png',
+    prerequisites: ['C++ Fundamentals', 'Basic programming concepts'],
+    learningOutcomes: [
+      'Design and implement classes',
+      'Understand inheritance and polymorphism',
+      'Work with constructors and destructors',
+      'Implement operator overloading',
+      'Use advanced OOP patterns'
+    ],
     lessons: [
       {
         id: 'classes-objects',
@@ -6419,7 +6430,18 @@ int main() {
   {
     id: 'advanced-cpp',
     title: 'Advanced C++ and Modern Features',
+    description: 'Master templates, STL, memory management, and modern C++ features',
     level: 'advanced',
+    duration: '10-12 weeks',
+    image: 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b7f68398-e374-4230-bf9d-1f90266d9bac.png',
+    prerequisites: ['Object-Oriented Programming', 'Data structures knowledge'],
+    learningOutcomes: [
+      'Create and use templates effectively',
+      'Master STL containers and algorithms',
+      'Understand smart pointers and memory management',
+      'Implement concurrent programming',
+      'Use modern C++ features (C++11/14/17/20)'
+    ],
     lessons: [
       {
         id: 'templates',

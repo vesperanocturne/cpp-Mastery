@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -52,10 +53,10 @@ export default function ProjectDetailPage() {
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-3xl font-bold text-slate-900 mb-4">Project Not Found</h1>
-          <p className="text-slate-600 mb-8">The project you're looking for doesn't exist.</p>
-          <a href="/courses">
+          <p className="text-slate-600 mb-8">The project you&apos;re looking for doesn&apos;t exist.</p>
+          <Link href="/courses">
             <Button>Back to Courses</Button>
-          </a>
+          </Link>
         </div>
       </div>
     );
@@ -65,11 +66,11 @@ export default function ProjectDetailPage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
-        <a href={`/courses/${course.id}`}>
+        <Link href={`/courses/${course.id}`}>
           <Button variant="outline" className="mb-6">
             ← Back to {course.title}
           </Button>
-        </a>
+        </Link>
 
         {/* Project Header */}
         <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
@@ -153,7 +154,7 @@ export default function ProjectDetailPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Project Features</CardTitle>
-                  <CardDescription>What you'll build in this project</CardDescription>
+                  <CardDescription>What you&apos;ll build in this project</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-3">
@@ -172,7 +173,7 @@ export default function ProjectDetailPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Technologies Used</CardTitle>
-                  <CardDescription>Skills and concepts you'll apply</CardDescription>
+                  <CardDescription>Skills and concepts you&apos;ll apply</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-wrap gap-2">
@@ -189,7 +190,7 @@ export default function ProjectDetailPage() {
             <Card className="mt-6">
               <CardHeader>
                 <CardTitle>Learning Outcomes</CardTitle>
-                <CardDescription>What you'll learn by completing this project</CardDescription>
+                <CardDescription>What you&apos;ll learn by completing this project</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -275,7 +276,7 @@ export default function ProjectDetailPage() {
               <Card>
                 <CardContent className="p-8 text-center">
                   <p className="text-slate-600">No starter code provided for this project.</p>
-                  <p className="text-slate-500 text-sm mt-2">You'll build everything from scratch!</p>
+                  <p className="text-slate-500 text-sm mt-2">You&apos;ll build everything from scratch!</p>
                 </CardContent>
               </Card>
             )}
@@ -296,7 +297,7 @@ export default function ProjectDetailPage() {
                       </div>
                       <div>
                         <h4 className="font-medium text-slate-900">Plan Your Approach</h4>
-                        <p className="text-slate-600 text-sm">Break down the project into smaller, manageable tasks. Identify the main functions you'll need.</p>
+                        <p className="text-slate-600 text-sm">Break down the project into smaller, manageable tasks. Identify the main functions you&apos;ll need.</p>
                       </div>
                     </div>
                     <div className="flex items-start space-x-3">
@@ -376,13 +377,13 @@ export default function ProjectDetailPage() {
                         <svg className="w-5 h-5 text-yellow-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                         </svg>
-                        <span className="text-slate-700 text-sm">Don't be afraid to refactor and improve</span>
+                        <span className="text-slate-700 text-sm">Don&apos;t be afraid to refactor and improve</span>
                       </div>
                       <div className="flex items-start space-x-2">
                         <svg className="w-5 h-5 text-yellow-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                         </svg>
-                        <span className="text-slate-700 text-sm">Ask for help when you're stuck</span>
+                        <span className="text-slate-700 text-sm">Ask for help when you&apos;re stuck</span>
                       </div>
                     </div>
                   </div>
@@ -394,11 +395,11 @@ export default function ProjectDetailPage() {
 
         {/* Navigation */}
         <div className="flex justify-between mt-8">
-          <a href={`/courses/${course.id}`}>
+          <Link href={`/courses/${course.id}`}>
             <Button variant="outline">
               ← Back to Course
             </Button>
-          </a>
+          </Link>
           <Button>
             Submit Project →
           </Button>

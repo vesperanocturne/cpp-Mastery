@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CodeBlock } from "@/components/CodeBlock";
 import { codeExamples } from "@/lib/courseData";
-import { downloadCheatSheet, downloadCodeTemplate, generateZipContent, downloadFile } from "@/lib/downloadUtils";
+import { downloadCheatSheet, downloadCodeTemplate, generateCodeTemplate, generateZipContent, downloadFile } from "@/lib/downloadUtils";
 
 export default function ResourcesPage() {
   const resources = [

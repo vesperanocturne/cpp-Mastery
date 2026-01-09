@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -96,16 +97,16 @@ export default function HomePage() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <a href="/courses">
+                <Link href="/courses">
                   <Button size="lg" className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white px-8 py-3 text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-200">
                     Start Learning Free
                   </Button>
-                </a>
-                <a href="/courses">
+                </Link>
+                <Link href="/courses">
                   <Button variant="outline" size="lg" className="border-slate-300 text-slate-700 hover:bg-slate-50 px-8 py-3 text-lg font-medium">
                     View Course Preview
                   </Button>
-                </a>
+                </Link>
               </div>
 
               {/* Stats */}
@@ -260,16 +261,16 @@ export default function HomePage() {
             Start with our free beginner course today.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/courses">
+            <Link href="/courses">
               <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50 px-8 py-3 text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-200">
                 Get Started Free
               </Button>
-            </a>
-            <a href="/courses">
+            </Link>
+            <Link href="/courses">
               <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-blue-600 px-8 py-3 text-lg font-medium">
                 View All Courses
               </Button>
-            </a>
+            </Link>
           </div>
         </div>
       </section>

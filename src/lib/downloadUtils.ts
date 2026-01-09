@@ -402,10 +402,10 @@ export function downloadCodeTemplate(templateName: string) {
 /**
  * Downloads course code examples as ZIP
  */
-export function downloadCourseCode(courseTitle: string, lessons: any[]) {
+export function downloadCourseCode(courseTitle: string, lessons: Array<{ title: string; codeExample?: string }>) {
   const codeFiles = lessons
     .filter(lesson => lesson.codeExample)
-    .map((lesson, index) => `// ${lesson.title}\n${lesson.codeExample}\n`);
+    .map((lesson) => `// ${lesson.title}\n${lesson.codeExample}\n`);
   
   const content = codeFiles.join('\n\n// ============================================\n\n');
   downloadFile({

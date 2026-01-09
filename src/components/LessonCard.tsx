@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -126,7 +127,7 @@ export function LessonCard({ lesson, onComplete, isExpanded = false }: LessonCar
 
           {/* Learning Objectives */}
           <div>
-            <h4 className="font-medium text-slate-900 mb-3">What You'll Learn</h4>
+            <h4 className="font-medium text-slate-900 mb-3">What You&apos;ll Learn</h4>
             <ul className="space-y-2 text-sm text-slate-600">
               <li className="flex items-start space-x-2">
                 <svg className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -151,11 +152,11 @@ export function LessonCard({ lesson, onComplete, isExpanded = false }: LessonCar
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-200">
-            <a href={`/lessons/${lesson.id}`} className="flex-1">
+            <Link href={`/lessons/${lesson.id}`} className="flex-1">
               <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
                 {lesson.completed ? 'Review Lesson' : 'Start Lesson'}
               </Button>
-            </a>
+            </Link>
             {!lesson.completed && (
               <Button 
                 variant="outline" 

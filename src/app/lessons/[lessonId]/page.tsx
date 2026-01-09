@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -63,10 +64,10 @@ export default function LessonDetailPage() {
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-3xl font-bold text-slate-900 mb-4">Lesson Not Found</h1>
-          <p className="text-slate-600 mb-8">The lesson you're looking for doesn't exist.</p>
-          <a href="/courses">
+          <p className="text-slate-600 mb-8">The lesson you&apos;re looking for doesn&apos;t exist.</p>
+          <Link href="/courses">
             <Button>Back to Courses</Button>
-          </a>
+          </Link>
         </div>
       </div>
     );
@@ -76,11 +77,11 @@ export default function LessonDetailPage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
-        <a href={`/courses/${course.id}`}>
+        <Link href={`/courses/${course.id}`}>
           <Button variant="outline" className="mb-6">
             ← Back to {course.title}
           </Button>
-        </a>
+        </Link>
 
         {/* Lesson Header */}
         <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
@@ -234,7 +235,7 @@ export default function LessonDetailPage() {
           <TabsContent value="practice" className="mt-6">
             <div className="space-y-6">
               {lesson.practiceExercises && lesson.practiceExercises.length > 0 ? (
-                lesson.practiceExercises.map((exercise, index) => (
+                lesson.practiceExercises.map((exercise) => (
                   <Card key={exercise.id}>
                     <CardHeader>
                       <div className="flex items-start justify-between">
@@ -318,9 +319,9 @@ export default function LessonDetailPage() {
                 <Card>
                   <CardContent className="p-8 text-center">
                     <p className="text-slate-600 mb-4">No practice exercises available for this lesson yet.</p>
-                    <a href="/exercises">
+                    <Link href="/exercises">
                       <Button>Browse All Exercises</Button>
-                    </a>
+                    </Link>
                   </CardContent>
                 </Card>
               )}

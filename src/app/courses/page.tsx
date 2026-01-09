@@ -115,7 +115,7 @@ export default function CoursesPage() {
 
                 <TabsContent value="lessons" className="mt-6">
                   <div className="space-y-4">
-                    {course.lessons.map((lesson, index) => (
+                    {course.lessons.map((lesson) => (
                       <LessonCard
                         key={lesson.id}
                         lesson={{

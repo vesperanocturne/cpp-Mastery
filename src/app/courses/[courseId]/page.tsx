@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -48,10 +49,10 @@ export default function CourseDetailPage() {
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-3xl font-bold text-slate-900 mb-4">Course Not Found</h1>
-          <p className="text-slate-600 mb-8">The course you're looking for doesn't exist.</p>
-          <a href="/courses">
+          <p className="text-slate-600 mb-8">The course you&apos;re looking for doesn&apos;t exist.</p>
+          <Link href="/courses">
             <Button>Back to Courses</Button>
-          </a>
+          </Link>
         </div>
       </div>
     );
@@ -61,11 +62,11 @@ export default function CourseDetailPage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
-        <a href="/courses">
+        <Link href="/courses">
           <Button variant="outline" className="mb-6">
             ← Back to Courses
           </Button>
-        </a>
+        </Link>
 
         {/* Course Header */}
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden mb-8">
@@ -202,11 +203,11 @@ export default function CourseDetailPage() {
                               ))}
                             </div>
                           </div>
-                          <a href={`/projects/${course.finalProject.id}`}>
+                          <Link href={`/projects/${course.finalProject.id}`}>
                             <Button className="w-full bg-green-600 hover:bg-green-700 text-white">
                               Start Final Project
                             </Button>
-                          </a>
+                          </Link>
                         </div>
                       </CardContent>
                     </Card>
@@ -250,9 +251,9 @@ export default function CourseDetailPage() {
                         <CardDescription>Additional exercises to reinforce learning</CardDescription>
                       </CardHeader>
                       <CardContent>
-                        <a href="/exercises">
+                        <Link href="/exercises">
                           <Button className="w-full">View Exercises</Button>
-                        </a>
+                        </Link>
                       </CardContent>
                     </Card>
                   </div>
