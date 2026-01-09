@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CodeBlock } from "@/components/CodeBlock";
 import { codeExamples } from "@/lib/courseData";
+import { downloadCheatSheet, downloadCodeTemplate, generateZipContent, downloadFile } from "@/lib/downloadUtils";
 
 export default function ResourcesPage() {
   const resources = [
@@ -230,7 +231,31 @@ public:
                             <Badge className={getFileTypeColor(item.type)}>
                               {item.type}
                             </Badge>
-                            <Button size="sm" variant="outline">
+                            <Button 
+                              size="sm" 
+                              variant="outline"
+                              onClick={() => {
+                                if (item.type === 'PDF') {
+                                  downloadCheatSheet(item.name);
+                                } else if (item.type === 'CPP' || item.type === 'ZIP') {
+                                  if (item.name.includes('Template') || item.name.includes('Boilerplate')) {
+                                    downloadCodeTemplate(item.name);
+                                  } else {
+                                    downloadFile({
+                                      name: `${item.name.replace(/\s+/g, '_')}.${item.type.toLowerCase()}`,
+                                      type: item.type,
+                                      content: `// ${item.name}\n// Generated content for ${item.name}\n`
+                                    });
+                                  }
+                                } else {
+                                  downloadFile({
+                                    name: `${item.name.replace(/\s+/g, '_')}.${item.type.toLowerCase()}`,
+                                    type: item.type,
+                                    content: `Content for ${item.name}`
+                                  });
+                                }
+                              }}
+                            >
                               Download
                             </Button>
                           </div>
@@ -260,7 +285,10 @@ public:
                       <div>• Code examples included</div>
                       <div>• Regular updates</div>
                     </div>
-                    <Button className="w-full mt-4 bg-blue-600 hover:bg-blue-700">
+                    <Button 
+                      className="w-full mt-4 bg-blue-600 hover:bg-blue-700"
+                      onClick={() => downloadCheatSheet('Complete C++ Course Guide')}
+                    >
                       Download (15.2 MB)
                     </Button>
                   </CardContent>
@@ -278,7 +306,23 @@ public:
                       <div>• Game development</div>
                       <div>• CMake configurations</div>
                     </div>
-                    <Button className="w-full mt-4 bg-green-600 hover:bg-green-700">
+                    <Button 
+                      className="w-full mt-4 bg-green-600 hover:bg-green-700"
+                      onClick={() => {
+                        const templates = [
+                          'Class Template Boilerplate',
+                          'Algorithm Templates',
+                          'Data Structure Templates',
+                          'Design Pattern Examples'
+                        ];
+                        const content = generateZipContent(templates.map(t => generateCodeTemplate(t)));
+                        downloadFile({
+                          name: 'Project_Templates.zip',
+                          type: 'ZIP',
+                          content: content
+                        });
+                      }}
+                    >
                       Download (8.7 MB)
                     </Button>
                   </CardContent>
@@ -296,7 +340,10 @@ public:
                       <div>• Coding challenges</div>
                       <div>• Company-specific tips</div>
                     </div>
-                    <Button className="w-full mt-4 bg-purple-600 hover:bg-purple-700">
+                    <Button 
+                      className="w-full mt-4 bg-purple-600 hover:bg-purple-700"
+                      onClick={() => downloadCheatSheet('C++ Interview Prep Guide')}
+                    >
                       Download (6.3 MB)
                     </Button>
                   </CardContent>
@@ -439,7 +486,11 @@ public:
                     <p className="text-sm text-slate-600 mb-4">
                       Complete reference for C++ standard library, language features, and examples.
                     </p>
-                    <Button variant="outline" className="w-full">
+                    <Button 
+                      variant="outline" 
+                      className="w-full"
+                      onClick={() => window.open('https://cppreference.com', '_blank')}
+                    >
                       Visit Site
                     </Button>
                   </CardContent>
@@ -454,7 +505,11 @@ public:
                     <p className="text-sm text-slate-600 mb-4">
                       Official guidelines for writing modern, safe, and efficient C++ code.
                     </p>
-                    <Button variant="outline" className="w-full">
+                    <Button 
+                      variant="outline" 
+                      className="w-full"
+                      onClick={() => window.open('https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines', '_blank')}
+                    >
                       Visit Site
                     </Button>
                   </CardContent>
@@ -469,7 +524,11 @@ public:
                     <p className="text-sm text-slate-600 mb-4">
                       Compile and analyze C++ code online with multiple compilers and optimization levels.
                     </p>
-                    <Button variant="outline" className="w-full">
+                    <Button 
+                      variant="outline" 
+                      className="w-full"
+                      onClick={() => window.open('https://godbolt.org', '_blank')}
+                    >
                       Visit Site
                     </Button>
                   </CardContent>

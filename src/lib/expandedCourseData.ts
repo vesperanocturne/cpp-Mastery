@@ -4770,7 +4770,7 @@ class Derived : public Base {
     }
 };
 \`\`\`
-Fix: Use `protected` for data you want derived classes to access.
+Fix: Use \`protected\` for data you want derived classes to access.
 
 **Mistake 2: Forgetting to call base constructor**
 \`\`\`cpp

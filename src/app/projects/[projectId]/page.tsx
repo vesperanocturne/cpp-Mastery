@@ -9,6 +9,7 @@ import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CodeBlock } from "@/components/CodeBlock";
 import { expandedCourses } from "@/lib/expandedCourseData";
+import { downloadProjectStarterCode } from "@/lib/downloadUtils";
 
 export default function ProjectDetailPage() {
   const params = useParams();
@@ -129,7 +130,10 @@ export default function ProjectDetailPage() {
                 Continue Working
               </Button>
             )}
-            <Button variant="outline">
+            <Button 
+              variant="outline"
+              onClick={() => downloadProjectStarterCode(project.title, project.starterCode)}
+            >
               Download Starter Code
             </Button>
           </div>

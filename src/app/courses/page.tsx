@@ -8,6 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LessonCard } from "@/components/LessonCard";
 import { courses } from "@/lib/courseData";
+import { downloadCourseCode, downloadCheatSheet } from "@/lib/downloadUtils";
 
 export default function CoursesPage() {
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
@@ -175,7 +176,17 @@ export default function CoursesPage() {
                         <CardDescription>Download all code examples from this course</CardDescription>
                       </CardHeader>
                       <CardContent>
-                        <Button className="w-full">Download ZIP</Button>
+                        <Button 
+                          className="w-full"
+                          onClick={() => {
+                            const course = courses.find(c => c.id === selectedCourse);
+                            if (course) {
+                              downloadCourseCode(course.title, course.lessons);
+                            }
+                          }}
+                        >
+                          Download ZIP
+                        </Button>
                       </CardContent>
                     </Card>
 
@@ -185,7 +196,12 @@ export default function CoursesPage() {
                         <CardDescription>Quick reference guide for C++ syntax</CardDescription>
                       </CardHeader>
                       <CardContent>
-                        <Button className="w-full">Download PDF</Button>
+                        <Button 
+                          className="w-full"
+                          onClick={() => downloadCheatSheet('C++ Syntax Cheat Sheet')}
+                        >
+                          Download PDF
+                        </Button>
                       </CardContent>
                     </Card>
 

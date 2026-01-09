@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,7 @@ import { expandedCourses } from "@/lib/expandedCourseData";
 
 export default function LessonDetailPage() {
   const params = useParams();
+  const router = useRouter();
   const lessonId = params.lessonId as string;
   const [progress, setProgress] = useState(0);
   const [completed, setCompleted] = useState(false);
@@ -19,15 +20,25 @@ export default function LessonDetailPage() {
   // Find the lesson across all courses
   let lesson = null;
   let course = null;
+  let currentLessonIndex = -1;
   
   for (const c of expandedCourses) {
-    const foundLesson = c.lessons.find(l => l.id === lessonId);
-    if (foundLesson) {
-      lesson = foundLesson;
+    const foundLessonIndex = c.lessons.findIndex(l => l.id === lessonId);
+    if (foundLessonIndex !== -1) {
+      lesson = c.lessons[foundLessonIndex];
       course = c;
+      currentLessonIndex = foundLessonIndex;
       break;
     }
   }
+
+  // Find previous and next lessons
+  const previousLesson = currentLessonIndex > 0 && course 
+    ? course.lessons[currentLessonIndex - 1] 
+    : null;
+  const nextLesson = currentLessonIndex >= 0 && course && currentLessonIndex < course.lessons.length - 1
+    ? course.lessons[currentLessonIndex + 1]
+    : null;
 
   const handleMarkComplete = () => {
     setProgress(100);
@@ -319,12 +330,29 @@ export default function LessonDetailPage() {
 
         {/* Navigation */}
         <div className="flex justify-between mt-8">
-          <Button variant="outline">
-            ← Previous Lesson
-          </Button>
-          <Button>
-            Next Lesson →
-          </Button>
+          {previousLesson ? (
+            <Button 
+              variant="outline"
+              onClick={() => router.push(`/lessons/${previousLesson.id}`)}
+            >
+              ← Previous Lesson
+            </Button>
+          ) : (
+            <Button variant="outline" disabled>
+              ← Previous Lesson
+            </Button>
+          )}
+          {nextLesson ? (
+            <Button
+              onClick={() => router.push(`/lessons/${nextLesson.id}`)}
+            >
+              Next Lesson →
+            </Button>
+          ) : (
+            <Button disabled>
+              Next Lesson →
+            </Button>
+          )}
         </div>
       </div>
     </div>

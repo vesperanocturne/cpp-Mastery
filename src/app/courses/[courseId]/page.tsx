@@ -9,6 +9,7 @@ import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LessonCard } from "@/components/LessonCard";
 import { expandedCourses } from "@/lib/expandedCourseData";
+import { downloadCourseCode, downloadCheatSheet } from "@/lib/downloadUtils";
 
 export default function CourseDetailPage() {
   const params = useParams();
@@ -22,7 +23,7 @@ export default function CourseDetailPage() {
   };
 
   const getCourseProgress = () => {
-    if (!course) return 0;
+    if (!course || !course.lessons || course.lessons.length === 0) return 0;
     const completedCount = course.lessons.filter(lesson => 
       completedLessons.has(lesson.id)
     ).length;
@@ -86,7 +87,7 @@ export default function CourseDetailPage() {
           <div className="p-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
               <div className="text-center">
-                <div className="text-2xl font-bold text-slate-900">{course.lessons.length}</div>
+                <div className="text-2xl font-bold text-slate-900">{course.lessons?.length || 0}</div>
                 <div className="text-slate-600">Lessons</div>
               </div>
               <div className="text-center">
@@ -110,7 +111,7 @@ export default function CourseDetailPage() {
 
               <TabsContent value="lessons" className="mt-6">
                 <div className="space-y-4">
-                  {course.lessons.map((lesson) => (
+                  {(course.lessons || []).map((lesson) => (
                     <LessonCard
                       key={lesson.id}
                       lesson={{
@@ -131,7 +132,7 @@ export default function CourseDetailPage() {
                     </CardHeader>
                     <CardContent>
                       <ul className="space-y-2">
-                        {course.prerequisites.map((prereq, index) => (
+                        {(course.prerequisites || []).map((prereq, index) => (
                           <li key={index} className="flex items-center space-x-2">
                             <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -149,7 +150,7 @@ export default function CourseDetailPage() {
                     </CardHeader>
                     <CardContent>
                       <ul className="space-y-2">
-                        {course.learningOutcomes.map((outcome, index) => (
+                        {(course.learningOutcomes || []).map((outcome, index) => (
                           <li key={index} className="flex items-start space-x-2">
                             <svg className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -194,7 +195,7 @@ export default function CourseDetailPage() {
                           <div>
                             <span className="font-medium text-green-800 text-sm">Technologies:</span>
                             <div className="flex flex-wrap gap-1 mt-1">
-                              {course.finalProject.technologies.map((tech, index) => (
+                              {(course.finalProject.technologies || []).map((tech, index) => (
                                 <Badge key={index} variant="outline" className="text-xs text-green-700 border-green-300">
                                   {tech}
                                 </Badge>
@@ -219,7 +220,12 @@ export default function CourseDetailPage() {
                         <CardDescription>Download all code examples from this course</CardDescription>
                       </CardHeader>
                       <CardContent>
-                        <Button className="w-full">Download ZIP</Button>
+                        <Button 
+                          className="w-full"
+                          onClick={() => downloadCourseCode(course.title, course.lessons)}
+                        >
+                          Download ZIP
+                        </Button>
                       </CardContent>
                     </Card>
 
@@ -229,7 +235,12 @@ export default function CourseDetailPage() {
                         <CardDescription>Quick reference guide for this course</CardDescription>
                       </CardHeader>
                       <CardContent>
-                        <Button className="w-full">Download PDF</Button>
+                        <Button 
+                          className="w-full"
+                          onClick={() => downloadCheatSheet(`${course.title} Cheat Sheet`)}
+                        >
+                          Download PDF
+                        </Button>
                       </CardContent>
                     </Card>
 
