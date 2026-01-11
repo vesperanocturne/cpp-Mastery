@@ -927,6 +927,302 @@ int main() {
       completed: false
     },
     {
+      id: 'bubble-sort',
+      title: 'Bubble Sort Algorithm',
+      description: 'Implement bubble sort to sort an array in ascending order',
+      difficulty: 'intermediate',
+      category: 'algorithms',
+      points: 40,
+      timeEstimate: '20 min',
+      problem: `Implement the Bubble Sort algorithm to sort an array in ascending order.
+
+Bubble Sort repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order. The pass through the list is repeated until no swaps are needed.
+
+Requirements:
+- Take array size and elements as input
+- Sort the array using bubble sort algorithm
+- Display the sorted array
+- Show the number of swaps performed`,
+      hints: [
+        'Use nested loops: outer loop for passes, inner loop for comparisons',
+        'Compare adjacent elements arr[j] and arr[j+1]',
+        'Swap if arr[j] > arr[j+1]',
+        'Optimize by stopping early if no swaps occur in a pass',
+        'The largest element "bubbles" to the end in each pass'
+      ],
+      solution: `#include <iostream>
+using namespace std;
+
+void bubbleSort(int arr[], int n) {
+    int swaps = 0;
+    bool swapped;
+    
+    for (int i = 0; i < n - 1; i++) {
+        swapped = false;
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                // Swap elements
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+                swapped = true;
+                swaps++;
+            }
+        }
+        // If no swapping occurred, array is sorted
+        if (!swapped) {
+            break;
+        }
+    }
+    
+    cout << "Total swaps: " << swaps << endl;
+}
+
+int main() {
+    int n;
+    cout << "Enter array size: ";
+    cin >> n;
+    
+    int arr[n];
+    cout << "Enter " << n << " elements: ";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    
+    cout << "\\nOriginal array: ";
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+    
+    bubbleSort(arr, n);
+    
+    cout << "Sorted array: ";
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '5\n64 34 25 12 22', output: 'Sorted array: 12 22 25 34 64' }
+      ],
+      completed: false
+    },
+    {
+      id: 'merge-sort',
+      title: 'Merge Sort Algorithm',
+      description: 'Implement merge sort using divide and conquer approach',
+      difficulty: 'advanced',
+      category: 'algorithms',
+      points: 60,
+      timeEstimate: '40 min',
+      problem: `Implement the Merge Sort algorithm using a divide and conquer approach.
+
+Merge Sort divides the array into two halves, sorts them recursively, and then merges the sorted halves.
+
+Algorithm:
+1. Divide: Split array into two halves
+2. Conquer: Recursively sort both halves
+3. Combine: Merge the two sorted halves
+
+Requirements:
+- Take array size and elements as input
+- Sort using merge sort algorithm
+- Display the sorted array
+- Time complexity should be O(n log n)`,
+      hints: [
+        'Use recursion to divide the array',
+        'Create a merge function to combine two sorted arrays',
+        'Divide until array size is 1 (base case)',
+        'Merge function: compare elements from both halves, add smaller to result',
+        'Use temporary arrays for merging',
+        'Handle remaining elements after comparison'
+      ],
+      solution: `#include <iostream>
+using namespace std;
+
+void merge(int arr[], int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+    
+    // Create temporary arrays
+    int leftArr[n1], rightArr[n2];
+    
+    // Copy data to temporary arrays
+    for (int i = 0; i < n1; i++) {
+        leftArr[i] = arr[left + i];
+    }
+    for (int j = 0; j < n2; j++) {
+        rightArr[j] = arr[mid + 1 + j];
+    }
+    
+    // Merge the temporary arrays back
+    int i = 0, j = 0, k = left;
+    
+    while (i < n1 && j < n2) {
+        if (leftArr[i] <= rightArr[j]) {
+            arr[k] = leftArr[i];
+            i++;
+        } else {
+            arr[k] = rightArr[j];
+            j++;
+        }
+        k++;
+    }
+    
+    // Copy remaining elements
+    while (i < n1) {
+        arr[k] = leftArr[i];
+        i++;
+        k++;
+    }
+    
+    while (j < n2) {
+        arr[k] = rightArr[j];
+        j++;
+        k++;
+    }
+}
+
+void mergeSort(int arr[], int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+        
+        // Sort first and second halves
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+        
+        // Merge the sorted halves
+        merge(arr, left, mid, right);
+    }
+}
+
+int main() {
+    int n;
+    cout << "Enter array size: ";
+    cin >> n;
+    
+    int arr[n];
+    cout << "Enter " << n << " elements: ";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    
+    cout << "\\nOriginal array: ";
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+    
+    mergeSort(arr, 0, n - 1);
+    
+    cout << "Sorted array: ";
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '6\n38 27 43 3 9 82', output: 'Sorted array: 3 9 27 38 43 82' }
+      ],
+      completed: false
+    },
+    {
+      id: 'breadth-first-search',
+      title: 'Breadth-First Search (BFS)',
+      description: 'Implement BFS algorithm to traverse a graph level by level',
+      difficulty: 'advanced',
+      category: 'algorithms',
+      points: 65,
+      timeEstimate: '45 min',
+      problem: `Implement Breadth-First Search (BFS) algorithm to traverse a graph.
+
+BFS explores all nodes at the present depth level before moving to nodes at the next depth level.
+
+Algorithm:
+1. Start from a source node
+2. Visit all neighbors of current node
+3. Mark visited nodes
+4. Use a queue to maintain order of exploration
+
+Requirements:
+- Represent graph using adjacency list
+- Implement BFS starting from a given node
+- Display the order of node visits
+- Handle disconnected components`,
+      hints: [
+        'Use a queue to store nodes to be visited',
+        'Use a visited array to track visited nodes',
+        'Start from source node, mark as visited, enqueue',
+        'While queue not empty: dequeue, visit neighbors, enqueue unvisited neighbors',
+        'Mark nodes as visited when enqueued to avoid duplicates',
+        'Use adjacency list: vector<vector<int>> or array of vectors'
+      ],
+      solution: `#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+
+void BFS(vector<vector<int>>& graph, int start, int n) {
+    vector<bool> visited(n, false);
+    queue<int> q;
+    
+    visited[start] = true;
+    q.push(start);
+    
+    cout << "BFS traversal starting from node " << start << ": ";
+    
+    while (!q.empty()) {
+        int node = q.front();
+        q.pop();
+        cout << node << " ";
+        
+        // Visit all neighbors
+        for (int neighbor : graph[node]) {
+            if (!visited[neighbor]) {
+                visited[neighbor] = true;
+                q.push(neighbor);
+            }
+        }
+    }
+    cout << endl;
+}
+
+int main() {
+    int n, edges;
+    cout << "Enter number of nodes: ";
+    cin >> n;
+    cout << "Enter number of edges: ";
+    cin >> edges;
+    
+    vector<vector<int>> graph(n);
+    
+    cout << "Enter edges (format: node1 node2):" << endl;
+    for (int i = 0; i < edges; i++) {
+        int u, v;
+        cin >> u >> v;
+        graph[u].push_back(v);
+        graph[v].push_back(u); // For undirected graph
+    }
+    
+    int start;
+    cout << "Enter starting node: ";
+    cin >> start;
+    
+    BFS(graph, start, n);
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '5 4\n0 1\n0 2\n1 3\n2 4\n0', output: 'BFS traversal starting from node 0:', requiredConstructs: ['vector', 'queue', 'function'] }
+      ],
+      completed: false
+    },
+    {
       id: 'matrix-multiply',
       title: 'Matrix Multiplication',
       description: 'Implement matrix multiplication for 2x2 matrices',
