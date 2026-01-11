@@ -3676,6 +3676,1077 @@ int main() {
         { input: '5 7\n0 1 4\n0 2 1\n1 2 2\n1 3 5\n2 3 8\n2 4 9\n3 4 2\n0', output: 'Shortest distances from node 0:', requiredConstructs: ['vector', 'priority_queue', 'algorithm'] }
       ],
       completed: false
+    },
+    {
+      id: 'binary-search-rotated',
+      title: 'Search in Rotated Sorted Array',
+      description: 'Implement binary search to find a target in a rotated sorted array',
+      difficulty: 'advanced',
+      category: 'algorithms',
+      points: 70,
+      timeEstimate: '50 min',
+      problem: `Given a rotated sorted array (e.g., [4,5,6,7,0,1,2] is rotated at index 4), 
+find the index of a target value using binary search in O(log n) time.
+
+A rotated sorted array is a sorted array that has been rotated at some pivot point.
+For example, [0,1,2,4,5,6,7] rotated at index 3 becomes [4,5,6,7,0,1,2].
+
+Requirements:
+- Use binary search approach
+- Handle rotation by checking which half is sorted
+- Return -1 if target is not found
+- Time complexity: O(log n)`,
+      hints: [
+        'Use binary search but modify the logic to handle rotation',
+        'Check if left half [low...mid] is sorted: if arr[low] <= arr[mid]',
+        'If left half is sorted and target is in range [arr[low], arr[mid]], search left',
+        'Otherwise, search in the right half',
+        'If right half is sorted, check if target is in range [arr[mid], arr[high]]',
+        'Handle edge cases like single element or two elements'
+      ],
+      solution: `#include <iostream>
+#include <vector>
+using namespace std;
+
+int searchRotatedArray(vector<int>& arr, int target) {
+    int low = 0, high = arr.size() - 1;
+    
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+        
+        if (arr[mid] == target) {
+            return mid;
+        }
+        
+        // Check if left half is sorted
+        if (arr[low] <= arr[mid]) {
+            // Target is in left sorted half
+            if (target >= arr[low] && target < arr[mid]) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        } else {
+            // Right half is sorted
+            // Target is in right sorted half
+            if (target > arr[mid] && target <= arr[high]) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+    }
+    
+    return -1;
+}
+
+int main() {
+    int n, target;
+    cout << "Enter size of array: ";
+    cin >> n;
+    
+    vector<int> arr(n);
+    cout << "Enter rotated sorted array: ";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    
+    cout << "Enter target to search: ";
+    cin >> target;
+    
+    int index = searchRotatedArray(arr, target);
+    
+    if (index != -1) {
+        cout << "Target found at index: " << index << endl;
+    } else {
+        cout << "Target not found" << endl;
+    }
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '7\n4 5 6 7 0 1 2\n0', output: 'Target found at index: 4' },
+        { input: '4\n1 3 5 7\n3', output: 'Target found at index: 1' }
+      ],
+      completed: false
+    },
+    {
+      id: 'longest-common-subsequence',
+      title: 'Longest Common Subsequence (LCS)',
+      description: 'Find the length of the longest common subsequence between two strings using dynamic programming',
+      difficulty: 'advanced',
+      category: 'algorithms',
+      points: 75,
+      timeEstimate: '55 min',
+      problem: `Given two strings, find the length of their longest common subsequence (LCS).
+
+A subsequence is a sequence that appears in the same relative order, but not necessarily contiguous.
+For example, "ace" is a subsequence of "abcde".
+
+Example:
+String 1: "ABCDGH"
+String 2: "AEDFHR"
+LCS: "ADH" (length 3)
+
+Requirements:
+- Use dynamic programming approach
+- Create a 2D DP table
+- Time complexity: O(m * n) where m and n are string lengths
+- Space complexity: O(m * n)`,
+      hints: [
+        'Create a 2D DP table: dp[i][j] = LCS length of first i chars of str1 and first j chars of str2',
+        'Base case: dp[0][j] = 0 and dp[i][0] = 0',
+        'If str1[i-1] == str2[j-1]: dp[i][j] = dp[i-1][j-1] + 1',
+        'Otherwise: dp[i][j] = max(dp[i-1][j], dp[i][j-1])',
+        'The answer is at dp[m][n] where m and n are string lengths'
+      ],
+      solution: `#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+int longestCommonSubsequence(string str1, string str2) {
+    int m = str1.length();
+    int n = str2.length();
+    
+    // Create DP table: dp[i][j] = LCS of str1[0..i-1] and str2[0..j-1]
+    vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
+    
+    // Fill DP table
+    for (int i = 1; i <= m; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (str1[i - 1] == str2[j - 1]) {
+                // Characters match, extend LCS
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+            } else {
+                // Take maximum of two possibilities
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+            }
+        }
+    }
+    
+    return dp[m][n];
+}
+
+int main() {
+    string str1, str2;
+    cout << "Enter first string: ";
+    cin >> str1;
+    cout << "Enter second string: ";
+    cin >> str2;
+    
+    int lcsLength = longestCommonSubsequence(str1, str2);
+    cout << "Length of Longest Common Subsequence: " << lcsLength << endl;
+    
+    return 0;
+}`,
+      testCases: [
+        { input: 'ABCDGH\nAEDFHR', output: 'Length of Longest Common Subsequence: 3' },
+        { input: 'AGGTAB\nGXTXAYB', output: 'Length of Longest Common Subsequence: 4' }
+      ],
+      completed: false
+    },
+    {
+      id: 'knapsack-problem',
+      title: '0/1 Knapsack Problem',
+      description: 'Solve the classic 0/1 knapsack problem using dynamic programming',
+      difficulty: 'advanced',
+      category: 'algorithms',
+      points: 80,
+      timeEstimate: '60 min',
+      problem: `Given weights and values of n items, put these items in a knapsack of capacity W 
+to get the maximum total value. You cannot break items (0/1 property).
+
+Each item can be used at most once.
+
+Example:
+Weights: [10, 20, 30]
+Values: [60, 100, 120]
+Capacity: 50
+Maximum value: 160 (items with weight 20 and 30)
+
+Requirements:
+- Use dynamic programming
+- Create a 2D DP table
+- Time complexity: O(n * W) where n is number of items
+- Return the maximum value that can be obtained`,
+      hints: [
+        'Create DP table: dp[i][w] = max value with first i items and capacity w',
+        'Base case: dp[0][w] = 0 for all w',
+        'For each item, decide: include it or not',
+        'If weight[i-1] <= w: dp[i][w] = max(include, exclude)',
+        'Include: value[i-1] + dp[i-1][w - weight[i-1]]',
+        'Exclude: dp[i-1][w]',
+        'Answer is at dp[n][W]'
+      ],
+      solution: `#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int knapsack(vector<int>& weights, vector<int>& values, int capacity) {
+    int n = weights.size();
+    
+    // DP table: dp[i][w] = max value with first i items and capacity w
+    vector<vector<int>> dp(n + 1, vector<int>(capacity + 1, 0));
+    
+    for (int i = 1; i <= n; i++) {
+        for (int w = 1; w <= capacity; w++) {
+            // Don't include current item
+            dp[i][w] = dp[i - 1][w];
+            
+            // Try to include current item if it fits
+            if (weights[i - 1] <= w) {
+                dp[i][w] = max(dp[i][w], 
+                              values[i - 1] + dp[i - 1][w - weights[i - 1]]);
+            }
+        }
+    }
+    
+    return dp[n][capacity];
+}
+
+int main() {
+    int n, capacity;
+    cout << "Enter number of items: ";
+    cin >> n;
+    
+    vector<int> weights(n), values(n);
+    cout << "Enter weights: ";
+    for (int i = 0; i < n; i++) {
+        cin >> weights[i];
+    }
+    
+    cout << "Enter values: ";
+    for (int i = 0; i < n; i++) {
+        cin >> values[i];
+    }
+    
+    cout << "Enter knapsack capacity: ";
+    cin >> capacity;
+    
+    int maxValue = knapsack(weights, values, capacity);
+    cout << "Maximum value: " << maxValue << endl;
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '3\n10 20 30\n60 100 120\n50', output: 'Maximum value: 160' },
+        { input: '4\n1 3 4 5\n1 4 5 7\n7', output: 'Maximum value: 9' }
+      ],
+      completed: false
+    },
+    {
+      id: 'longest-increasing-subsequence',
+      title: 'Longest Increasing Subsequence (LIS)',
+      description: 'Find the length of the longest increasing subsequence using dynamic programming',
+      difficulty: 'advanced',
+      category: 'algorithms',
+      points: 70,
+      timeEstimate: '50 min',
+      problem: `Given an array of integers, find the length of the longest increasing subsequence (LIS).
+
+A subsequence is a sequence that can be derived from an array by deleting some elements 
+without changing the order of the remaining elements.
+
+Example:
+Array: [10, 9, 2, 5, 3, 7, 101, 18]
+LIS: [2, 3, 7, 18] or [2, 5, 7, 18] (length 4)
+
+Requirements:
+- Use dynamic programming
+- Time complexity: O(n^2) where n is array size
+- Return the length of LIS`,
+      hints: [
+        'Create DP array: dp[i] = length of LIS ending at index i',
+        'Initialize all dp[i] = 1 (each element is a subsequence of length 1)',
+        'For each i, check all previous elements j < i',
+        'If arr[j] < arr[i]: dp[i] = max(dp[i], dp[j] + 1)',
+        'The answer is the maximum value in dp array',
+        'Track the maximum as you build the DP array'
+      ],
+      solution: `#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int longestIncreasingSubsequence(vector<int>& arr) {
+    int n = arr.size();
+    if (n == 0) return 0;
+    
+    // dp[i] = length of LIS ending at index i
+    vector<int> dp(n, 1);
+    
+    for (int i = 1; i < n; i++) {
+        for (int j = 0; j < i; j++) {
+            if (arr[j] < arr[i]) {
+                dp[i] = max(dp[i], dp[j] + 1);
+            }
+        }
+    }
+    
+    // Find maximum value in dp
+    return *max_element(dp.begin(), dp.end());
+}
+
+int main() {
+    int n;
+    cout << "Enter size of array: ";
+    cin >> n;
+    
+    vector<int> arr(n);
+    cout << "Enter array elements: ";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    
+    int lisLength = longestIncreasingSubsequence(arr);
+    cout << "Length of Longest Increasing Subsequence: " << lisLength << endl;
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '8\n10 9 2 5 3 7 101 18', output: 'Length of Longest Increasing Subsequence: 4' },
+        { input: '6\n0 1 0 3 2 3', output: 'Length of Longest Increasing Subsequence: 4' }
+      ],
+      completed: false
+    },
+    {
+      id: 'topological-sort',
+      title: 'Topological Sort',
+      description: 'Implement topological sorting for a directed acyclic graph (DAG)',
+      difficulty: 'advanced',
+      category: 'algorithms',
+      points: 75,
+      timeEstimate: '55 min',
+      problem: `Given a directed acyclic graph (DAG), find a topological ordering of its vertices.
+
+A topological sort is a linear ordering of vertices such that for every directed edge (u, v), 
+vertex u comes before v in the ordering.
+
+Example:
+Graph: 0 -> 1, 0 -> 2, 1 -> 3, 2 -> 3
+Topological order: [0, 1, 2, 3] or [0, 2, 1, 3]
+
+Requirements:
+- Use DFS-based approach
+- Handle cycles (return empty if cycle exists)
+- Time complexity: O(V + E) where V is vertices, E is edges
+- Print the topological order`,
+      hints: [
+        'Use DFS to traverse the graph',
+        'Maintain a visited array and a recursion stack (or inStack)',
+        'Mark nodes as visited and add to result after processing all neighbors',
+        'If you encounter a node in recursion stack, there is a cycle',
+        'Reverse the result at the end (or use stack)',
+        'Start DFS from all unvisited nodes'
+      ],
+      solution: `#include <iostream>
+#include <vector>
+#include <stack>
+using namespace std;
+
+bool dfs(int node, vector<vector<int>>& graph, vector<bool>& visited, 
+         vector<bool>& inStack, stack<int>& result) {
+    visited[node] = true;
+    inStack[node] = true;
+    
+    for (int neighbor : graph[node]) {
+        if (!visited[neighbor]) {
+            if (!dfs(neighbor, graph, visited, inStack, result)) {
+                return false; // Cycle detected
+            }
+        } else if (inStack[neighbor]) {
+            return false; // Cycle detected
+        }
+    }
+    
+    inStack[node] = false;
+    result.push(node);
+    return true;
+}
+
+vector<int> topologicalSort(int n, vector<vector<int>>& graph) {
+    vector<bool> visited(n, false);
+    vector<bool> inStack(n, false);
+    stack<int> result;
+    
+    for (int i = 0; i < n; i++) {
+        if (!visited[i]) {
+            if (!dfs(i, graph, visited, inStack, result)) {
+                return {}; // Cycle detected
+            }
+        }
+    }
+    
+    vector<int> order;
+    while (!result.empty()) {
+        order.push_back(result.top());
+        result.pop();
+    }
+    
+    return order;
+}
+
+int main() {
+    int n, edges;
+    cout << "Enter number of vertices: ";
+    cin >> n;
+    cout << "Enter number of edges: ";
+    cin >> edges;
+    
+    vector<vector<int>> graph(n);
+    cout << "Enter edges (format: from to):" << endl;
+    for (int i = 0; i < edges; i++) {
+        int from, to;
+        cin >> from >> to;
+        graph[from].push_back(to);
+    }
+    
+    vector<int> order = topologicalSort(n, graph);
+    
+    if (order.empty()) {
+        cout << "Graph contains a cycle! Topological sort not possible." << endl;
+    } else {
+        cout << "Topological order: ";
+        for (int i = 0; i < order.size(); i++) {
+            cout << order[i];
+            if (i < order.size() - 1) cout << " -> ";
+        }
+        cout << endl;
+    }
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '4 4\n0 1\n0 2\n1 3\n2 3', output: 'Topological order:', requiredConstructs: ['vector', 'stack', 'algorithm'] }
+      ],
+      completed: false
+    },
+    {
+      id: 'union-find',
+      title: 'Union-Find (Disjoint Set Union)',
+      description: 'Implement Union-Find data structure with path compression and union by rank',
+      difficulty: 'advanced',
+      category: 'algorithms',
+      points: 70,
+      timeEstimate: '50 min',
+      problem: `Implement the Union-Find (Disjoint Set Union) data structure with path compression 
+and union by rank optimizations.
+
+Operations:
+- find(x): Find the root of the set containing x
+- union(x, y): Union the sets containing x and y
+- connected(x, y): Check if x and y are in the same set
+
+Requirements:
+- Use path compression in find() for O(α(n)) amortized time
+- Use union by rank to keep tree height small
+- α(n) is the inverse Ackermann function (practically constant)
+- Support operations on n elements`,
+      hints: [
+        'Maintain parent array: parent[i] = parent of i',
+        'Maintain rank array: rank[i] = approximate height of tree rooted at i',
+        'find(x): recursively find root, then set parent[x] = root (path compression)',
+        'union(x, y): find roots, if different, attach smaller rank tree to larger',
+        'If ranks equal, increment rank of new root',
+        'Initialize: parent[i] = i, rank[i] = 0'
+      ],
+      solution: `#include <iostream>
+#include <vector>
+using namespace std;
+
+class UnionFind {
+private:
+    vector<int> parent;
+    vector<int> rank;
+    
+public:
+    UnionFind(int n) {
+        parent.resize(n);
+        rank.resize(n, 0);
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+        }
+    }
+    
+    // Find with path compression
+    int find(int x) {
+        if (parent[x] != x) {
+            parent[x] = find(parent[x]); // Path compression
+        }
+        return parent[x];
+    }
+    
+    // Union by rank
+    void unionSets(int x, int y) {
+        int rootX = find(x);
+        int rootY = find(y);
+        
+        if (rootX == rootY) return; // Already in same set
+        
+        // Union by rank
+        if (rank[rootX] < rank[rootY]) {
+            parent[rootX] = rootY;
+        } else if (rank[rootX] > rank[rootY]) {
+            parent[rootY] = rootX;
+        } else {
+            parent[rootY] = rootX;
+            rank[rootX]++;
+        }
+    }
+    
+    bool connected(int x, int y) {
+        return find(x) == find(y);
+    }
+};
+
+int main() {
+    int n, operations;
+    cout << "Enter number of elements: ";
+    cin >> n;
+    cout << "Enter number of operations: ";
+    cin >> operations;
+    
+    UnionFind uf(n);
+    
+    cout << "Operations: 1=union, 2=find, 3=connected" << endl;
+    for (int i = 0; i < operations; i++) {
+        int op, x, y;
+        cin >> op;
+        
+        if (op == 1) {
+            cin >> x >> y;
+            uf.unionSets(x, y);
+            cout << "Union(" << x << ", " << y << ")" << endl;
+        } else if (op == 2) {
+            cin >> x;
+            cout << "Find(" << x << ") = " << uf.find(x) << endl;
+        } else if (op == 3) {
+            cin >> x >> y;
+            cout << "Connected(" << x << ", " << y << ") = " 
+                 << (uf.connected(x, y) ? "true" : "false") << endl;
+        }
+    }
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '5 6\n1 0 1\n1 2 3\n3 0 2\n1 1 4\n3 0 4\n2 0', output: 'Connected', requiredConstructs: ['vector', 'class'] }
+      ],
+      completed: false
+    },
+    {
+      id: 'segment-tree',
+      title: 'Segment Tree - Range Sum Query',
+      description: 'Implement a segment tree for range sum queries and point updates',
+      difficulty: 'advanced',
+      category: 'algorithms',
+      points: 85,
+      timeEstimate: '65 min',
+      problem: `Implement a Segment Tree that supports:
+1. Range Sum Query: Get sum of elements in range [l, r]
+2. Point Update: Update value at index i
+
+A segment tree is a binary tree where each node stores information about a segment of the array.
+
+Example:
+Array: [1, 3, 5, 7, 9, 11]
+Query(1, 3): Sum of indices 1 to 3 = 3 + 5 + 7 = 15
+Update(2, 10): Change element at index 2 to 10
+
+Requirements:
+- Build tree in O(n) time
+- Query in O(log n) time
+- Update in O(log n) time
+- Use array-based representation`,
+      hints: [
+        'Use array-based segment tree: tree[2*i] and tree[2*i+1] are children of tree[i]',
+        'Build recursively: combine left and right children',
+        'Query: if current segment is completely inside [l, r], return its value',
+        'If completely outside, return 0',
+        'Otherwise, query both children and combine results',
+        'Update: update leaf, then propagate changes up to root',
+        'Tree size: 4 * n (to be safe)'
+      ],
+      solution: `#include <iostream>
+#include <vector>
+using namespace std;
+
+class SegmentTree {
+private:
+    vector<int> tree;
+    int n;
+    
+    void build(vector<int>& arr, int node, int start, int end) {
+        if (start == end) {
+            tree[node] = arr[start];
+        } else {
+            int mid = (start + end) / 2;
+            build(arr, 2 * node, start, mid);
+            build(arr, 2 * node + 1, mid + 1, end);
+            tree[node] = tree[2 * node] + tree[2 * node + 1];
+        }
+    }
+    
+    void update(int node, int start, int end, int idx, int val) {
+        if (start == end) {
+            tree[node] = val;
+        } else {
+            int mid = (start + end) / 2;
+            if (idx <= mid) {
+                update(2 * node, start, mid, idx, val);
+            } else {
+                update(2 * node + 1, mid + 1, end, idx, val);
+            }
+            tree[node] = tree[2 * node] + tree[2 * node + 1];
+        }
+    }
+    
+    int query(int node, int start, int end, int l, int r) {
+        if (r < start || end < l) {
+            return 0; // Outside range
+        }
+        if (l <= start && end <= r) {
+            return tree[node]; // Completely inside range
+        }
+        int mid = (start + end) / 2;
+        return query(2 * node, start, mid, l, r) + 
+               query(2 * node + 1, mid + 1, end, l, r);
+    }
+    
+public:
+    SegmentTree(vector<int>& arr) {
+        n = arr.size();
+        tree.resize(4 * n);
+        build(arr, 1, 0, n - 1);
+    }
+    
+    void update(int idx, int val) {
+        update(1, 0, n - 1, idx, val);
+    }
+    
+    int query(int l, int r) {
+        return query(1, 0, n - 1, l, r);
+    }
+};
+
+int main() {
+    int n;
+    cout << "Enter size of array: ";
+    cin >> n;
+    
+    vector<int> arr(n);
+    cout << "Enter array elements: ";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    
+    SegmentTree st(arr);
+    
+    int queries;
+    cout << "Enter number of queries: ";
+    cin >> queries;
+    cout << "Format: 1 l r (query), 2 idx val (update)" << endl;
+    
+    for (int i = 0; i < queries; i++) {
+        int op;
+        cin >> op;
+        
+        if (op == 1) {
+            int l, r;
+            cin >> l >> r;
+            cout << "Sum[" << l << ", " << r << "] = " << st.query(l, r) << endl;
+        } else if (op == 2) {
+            int idx, val;
+            cin >> idx >> val;
+            st.update(idx, val);
+            cout << "Updated index " << idx << " to " << val << endl;
+        }
+    }
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '6\n1 3 5 7 9 11\n3\n1 1 3\n2 2 10\n1 1 3', output: 'Sum[1, 3] = 15', requiredConstructs: ['vector', 'class'] }
+      ],
+      completed: false
+    },
+    {
+      id: 'trie-prefix-tree',
+      title: 'Trie (Prefix Tree)',
+      description: 'Implement a Trie data structure for efficient string prefix matching',
+      difficulty: 'advanced',
+      category: 'algorithms',
+      points: 75,
+      timeEstimate: '55 min',
+      problem: `Implement a Trie (Prefix Tree) that supports:
+1. insert(word): Insert a word into the trie
+2. search(word): Return true if word exists in trie
+3. startsWith(prefix): Return true if any word starts with prefix
+
+A Trie is a tree-like data structure that stores strings character by character.
+
+Example:
+Insert: "apple", "app", "apply"
+search("app"): true
+search("apps"): false
+startsWith("app"): true
+
+Requirements:
+- Each node has 26 children (for lowercase letters a-z)
+- Mark end of word with a flag
+- Time complexity: O(m) per operation where m is word length`,
+      hints: [
+        'Create TrieNode class with children array and isEndOfWord flag',
+        'Children array of size 26 (one for each letter)',
+        'insert: traverse/create nodes for each character, mark last node as end',
+        'search: traverse nodes, check if word exists and ends at a word',
+        'startsWith: traverse nodes, return true if prefix path exists',
+        'Use character - 'a' to convert to index (0-25)'
+      ],
+      solution: `#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+class TrieNode {
+public:
+    vector<TrieNode*> children;
+    bool isEndOfWord;
+    
+    TrieNode() {
+        children.resize(26, nullptr);
+        isEndOfWord = false;
+    }
+};
+
+class Trie {
+private:
+    TrieNode* root;
+    
+public:
+    Trie() {
+        root = new TrieNode();
+    }
+    
+    void insert(string word) {
+        TrieNode* node = root;
+        for (char c : word) {
+            int index = c - 'a';
+            if (node->children[index] == nullptr) {
+                node->children[index] = new TrieNode();
+            }
+            node = node->children[index];
+        }
+        node->isEndOfWord = true;
+    }
+    
+    bool search(string word) {
+        TrieNode* node = root;
+        for (char c : word) {
+            int index = c - 'a';
+            if (node->children[index] == nullptr) {
+                return false;
+            }
+            node = node->children[index];
+        }
+        return node->isEndOfWord;
+    }
+    
+    bool startsWith(string prefix) {
+        TrieNode* node = root;
+        for (char c : prefix) {
+            int index = c - 'a';
+            if (node->children[index] == nullptr) {
+                return false;
+            }
+            node = node->children[index];
+        }
+        return true;
+    }
+};
+
+int main() {
+    Trie trie;
+    int operations;
+    
+    cout << "Enter number of operations: ";
+    cin >> operations;
+    cout << "Format: 1 word (insert), 2 word (search), 3 prefix (startsWith)" << endl;
+    
+    for (int i = 0; i < operations; i++) {
+        int op;
+        string word;
+        cin >> op >> word;
+        
+        if (op == 1) {
+            trie.insert(word);
+            cout << "Inserted: " << word << endl;
+        } else if (op == 2) {
+            cout << "Search(" << word << ") = " 
+                 << (trie.search(word) ? "true" : "false") << endl;
+        } else if (op == 3) {
+            cout << "StartsWith(" << word << ") = " 
+                 << (trie.startsWith(word) ? "true" : "false") << endl;
+        }
+    }
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '5\n1 apple\n1 app\n2 app\n2 apps\n3 app', output: 'Search(app) = true', requiredConstructs: ['vector', 'class', 'string'] }
+      ],
+      completed: false
+    },
+    {
+      id: 'kmp-string-matching',
+      title: 'KMP String Matching Algorithm',
+      description: 'Implement the Knuth-Morris-Pratt algorithm for efficient string pattern matching',
+      difficulty: 'advanced',
+      category: 'algorithms',
+      points: 80,
+      timeEstimate: '60 min',
+      problem: `Implement the KMP (Knuth-Morris-Pratt) algorithm to find all occurrences of a pattern 
+in a text string.
+
+KMP algorithm uses a failure function (LPS - Longest Proper Prefix which is also Suffix) 
+to avoid unnecessary comparisons.
+
+Example:
+Text: "ABABDABACDABABCABCAB"
+Pattern: "ABABCABAB"
+Find all starting positions where pattern occurs.
+
+Requirements:
+- Build LPS array for the pattern
+- Use LPS to skip unnecessary comparisons
+- Time complexity: O(n + m) where n is text length, m is pattern length
+- Return all starting indices where pattern is found`,
+      hints: [
+        'Build LPS array: lps[i] = length of longest proper prefix that is also suffix in pattern[0..i]',
+        'For LPS: if pattern[i] == pattern[len], increment len and set lps[i] = len',
+        'If not match and len > 0, set len = lps[len-1] and retry',
+        'For matching: if text[i] == pattern[j], increment both i and j',
+        'If j == m, pattern found at index (i - j)',
+        'If mismatch and j > 0, set j = lps[j-1] (don\'t increment i)'
+      ],
+      solution: `#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+vector<int> buildLPS(string pattern) {
+    int m = pattern.length();
+    vector<int> lps(m, 0);
+    int len = 0;
+    int i = 1;
+    
+    while (i < m) {
+        if (pattern[i] == pattern[len]) {
+            len++;
+            lps[i] = len;
+            i++;
+        } else {
+            if (len != 0) {
+                len = lps[len - 1];
+            } else {
+                lps[i] = 0;
+                i++;
+            }
+        }
+    }
+    
+    return lps;
+}
+
+vector<int> kmpSearch(string text, string pattern) {
+    int n = text.length();
+    int m = pattern.length();
+    vector<int> result;
+    
+    if (m == 0) return result;
+    
+    vector<int> lps = buildLPS(pattern);
+    
+    int i = 0; // Index for text
+    int j = 0; // Index for pattern
+    
+    while (i < n) {
+        if (text[i] == pattern[j]) {
+            i++;
+            j++;
+        }
+        
+        if (j == m) {
+            // Pattern found at index (i - j)
+            result.push_back(i - j);
+            j = lps[j - 1];
+        } else if (i < n && text[i] != pattern[j]) {
+            if (j != 0) {
+                j = lps[j - 1];
+            } else {
+                i++;
+            }
+        }
+    }
+    
+    return result;
+}
+
+int main() {
+    string text, pattern;
+    cout << "Enter text: ";
+    getline(cin, text);
+    cout << "Enter pattern: ";
+    getline(cin, pattern);
+    
+    vector<int> indices = kmpSearch(text, pattern);
+    
+    if (indices.empty()) {
+        cout << "Pattern not found" << endl;
+    } else {
+        cout << "Pattern found at indices: ";
+        for (int i = 0; i < indices.size(); i++) {
+            cout << indices[i];
+            if (i < indices.size() - 1) cout << ", ";
+        }
+        cout << endl;
+    }
+    
+    return 0;
+}`,
+      testCases: [
+        { input: 'ABABDABACDABABCABCAB\nABABCABAB', output: 'Pattern found at indices:', requiredConstructs: ['vector', 'string'] }
+      ],
+      completed: false
+    },
+    {
+      id: 'floyd-warshall',
+      title: 'Floyd-Warshall Algorithm',
+      description: 'Implement Floyd-Warshall algorithm to find shortest paths between all pairs of vertices',
+      difficulty: 'advanced',
+      category: 'algorithms',
+      points: 85,
+      timeEstimate: '65 min',
+      problem: `Implement the Floyd-Warshall algorithm to find the shortest distances between 
+all pairs of vertices in a weighted graph.
+
+The algorithm works for both directed and undirected graphs, and can handle negative edge weights 
+(but not negative cycles).
+
+Example:
+Graph with 4 vertices:
+0 -> 1: 5
+0 -> 3: 10
+1 -> 2: 3
+2 -> 3: 1
+
+Find shortest distance between every pair of vertices.
+
+Requirements:
+- Use dynamic programming approach
+- Create distance matrix: dist[i][j] = shortest distance from i to j
+- Time complexity: O(V^3) where V is number of vertices
+- Handle unreachable vertices (use INT_MAX or -1)`,
+      hints: [
+        'Initialize dist[i][j] = weight if edge exists, 0 if i==j, INT_MAX otherwise',
+        'Use three nested loops: for k, for i, for j',
+        'For each intermediate vertex k, try to improve dist[i][j]',
+        'Update: dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])',
+        'After all iterations, dist[i][j] contains shortest path from i to j',
+        'Check for negative cycles: if dist[i][i] < 0 for any i'
+      ],
+      solution: `#include <iostream>
+#include <vector>
+#include <climits>
+#include <iomanip>
+using namespace std;
+
+void floydWarshall(vector<vector<int>>& graph, int n) {
+    // Initialize distance matrix
+    vector<vector<int>> dist(n, vector<int>(n));
+    
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (i == j) {
+                dist[i][j] = 0;
+            } else if (graph[i][j] != 0) {
+                dist[i][j] = graph[i][j];
+            } else {
+                dist[i][j] = INT_MAX;
+            }
+        }
+    }
+    
+    // Floyd-Warshall algorithm
+    for (int k = 0; k < n; k++) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (dist[i][k] != INT_MAX && dist[k][j] != INT_MAX) {
+                    dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
+                }
+            }
+        }
+    }
+    
+    // Check for negative cycles
+    for (int i = 0; i < n; i++) {
+        if (dist[i][i] < 0) {
+            cout << "Graph contains negative cycle!" << endl;
+            return;
+        }
+    }
+    
+    // Print shortest distances
+    cout << "Shortest distances between all pairs:" << endl;
+    cout << setw(6) << " ";
+    for (int i = 0; i < n; i++) {
+        cout << setw(6) << i;
+    }
+    cout << endl;
+    
+    for (int i = 0; i < n; i++) {
+        cout << setw(6) << i;
+        for (int j = 0; j < n; j++) {
+            if (dist[i][j] == INT_MAX) {
+                cout << setw(6) << "INF";
+            } else {
+                cout << setw(6) << dist[i][j];
+            }
+        }
+        cout << endl;
+    }
+}
+
+int main() {
+    int n;
+    cout << "Enter number of vertices: ";
+    cin >> n;
+    
+    vector<vector<int>> graph(n, vector<int>(n, 0));
+    
+    int edges;
+    cout << "Enter number of edges: ";
+    cin >> edges;
+    cout << "Enter edges (format: from to weight):" << endl;
+    
+    for (int i = 0; i < edges; i++) {
+        int from, to, weight;
+        cin >> from >> to >> weight;
+        graph[from][to] = weight;
+        // For undirected graph, uncomment: graph[to][from] = weight;
+    }
+    
+    floydWarshall(graph, n);
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '4 4\n0 1 5\n0 3 10\n1 2 3\n2 3 1', output: 'Shortest distances between all pairs:', requiredConstructs: ['vector', 'algorithm', 'climits'] }
+      ],
+      completed: false
     }
   ];
 
