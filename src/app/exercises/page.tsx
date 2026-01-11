@@ -4747,6 +4747,339 @@ int main() {
         { input: '4 4\n0 1 5\n0 3 10\n1 2 3\n2 3 1', output: 'Shortest distances between all pairs:', requiredConstructs: ['vector', 'algorithm', 'climits'] }
       ],
       completed: false
+    },
+    {
+      id: 'a-star-search',
+      title: 'A* Search Algorithm',
+      description: 'Implement the A* pathfinding algorithm with heuristic function for optimal path finding',
+      difficulty: 'advanced',
+      category: 'algorithms',
+      points: 100,
+      timeEstimate: '90 min',
+      problem: `Implement the A* (A-star) search algorithm to find the shortest path from a start node to a goal node 
+in a weighted graph using a heuristic function.
+
+A* is an informed search algorithm that uses both:
+- g(n): actual cost from start to node n
+- h(n): heuristic estimate of cost from node n to goal
+- f(n) = g(n) + h(n): total estimated cost
+
+The algorithm is optimal and complete when using an admissible heuristic (never overestimates).
+
+Example:
+Graph with nodes 0-4, edges with weights, and heuristic values:
+Edges: 0->1(4), 0->2(2), 1->3(5), 2->3(1), 3->4(3)
+Heuristics to goal(4): h(0)=6, h(1)=5, h(2)=4, h(3)=3, h(4)=0
+Find path from 0 to 4.
+
+Requirements:
+- Use priority queue (min-heap) based on f(n) = g(n) + h(n)
+- Maintain g(n) for each node (actual cost from start)
+- Use admissible heuristic h(n) (provided as input)
+- Reconstruct and return the path from start to goal
+- Handle cases where no path exists
+- Time complexity: O(b^d) where b is branching factor, d is depth (with good heuristic, much better)`,
+      hints: [
+        'Use priority queue storing (f_score, g_score, node, parent) tuples',
+        'Maintain g_score map: actual cost from start to each node',
+        'Maintain f_score = g_score + heuristic for priority queue ordering',
+        'Maintain came_from map to reconstruct path',
+        'Initialize: g_score[start] = 0, f_score[start] = heuristic[start]',
+        'For each neighbor: tentative_g = g_score[current] + edge_weight',
+        'If tentative_g < g_score[neighbor], update and add to queue',
+        'Stop when goal is reached, then reconstruct path backwards',
+        'Use closed set to avoid revisiting nodes (optional optimization)',
+        'Heuristic must be admissible: h(n) <= actual cost to goal'
+      ],
+      solution: `#include <iostream>
+#include <vector>
+#include <queue>
+#include <unordered_map>
+#include <climits>
+#include <algorithm>
+using namespace std;
+
+struct Node {
+    int id;
+    int f_score;
+    int g_score;
+    int parent;
+    
+    bool operator>(const Node& other) const {
+        return f_score > other.f_score;
+    }
+};
+
+vector<int> aStarSearch(vector<vector<pair<int, int>>>& graph, 
+                        vector<int>& heuristic, int start, int goal, int n) {
+    priority_queue<Node, vector<Node>, greater<Node>> openSet;
+    vector<int> g_score(n, INT_MAX);
+    vector<int> f_score(n, INT_MAX);
+    vector<int> came_from(n, -1);
+    vector<bool> closedSet(n, false);
+    
+    g_score[start] = 0;
+    f_score[start] = heuristic[start];
+    
+    openSet.push({start, f_score[start], g_score[start], -1});
+    
+    while (!openSet.empty()) {
+        Node current = openSet.top();
+        openSet.pop();
+        
+        int current_id = current.id;
+        
+        if (closedSet[current_id]) continue;
+        closedSet[current_id] = true;
+        
+        if (current_id == goal) {
+            // Reconstruct path
+            vector<int> path;
+            int node = goal;
+            while (node != -1) {
+                path.push_back(node);
+                node = came_from[node];
+            }
+            reverse(path.begin(), path.end());
+            return path;
+        }
+        
+        for (auto& edge : graph[current_id]) {
+            int neighbor = edge.first;
+            int edge_weight = edge.second;
+            
+            if (closedSet[neighbor]) continue;
+            
+            int tentative_g = g_score[current_id] + edge_weight;
+            
+            if (tentative_g < g_score[neighbor]) {
+                came_from[neighbor] = current_id;
+                g_score[neighbor] = tentative_g;
+                f_score[neighbor] = g_score[neighbor] + heuristic[neighbor];
+                openSet.push({neighbor, f_score[neighbor], g_score[neighbor], current_id});
+            }
+        }
+    }
+    
+    return {}; // No path found
+}
+
+int main() {
+    int n, edges, start, goal;
+    cout << "Enter number of nodes: ";
+    cin >> n;
+    cout << "Enter number of edges: ";
+    cin >> edges;
+    
+    vector<vector<pair<int, int>>> graph(n);
+    cout << "Enter edges (format: from to weight):" << endl;
+    for (int i = 0; i < edges; i++) {
+        int from, to, weight;
+        cin >> from >> to >> weight;
+        graph[from].push_back({to, weight});
+    }
+    
+    vector<int> heuristic(n);
+    cout << "Enter heuristic values for each node (estimate to goal):" << endl;
+    for (int i = 0; i < n; i++) {
+        cout << "Heuristic for node " << i << ": ";
+        cin >> heuristic[i];
+    }
+    
+    cout << "Enter start node: ";
+    cin >> start;
+    cout << "Enter goal node: ";
+    cin >> goal;
+    
+    vector<int> path = aStarSearch(graph, heuristic, start, goal, n);
+    
+    if (path.empty()) {
+        cout << "No path found from " << start << " to " << goal << endl;
+    } else {
+        cout << "Path found! Total cost: ";
+        int totalCost = 0;
+        for (int i = 0; i < path.size() - 1; i++) {
+            for (auto& edge : graph[path[i]]) {
+                if (edge.first == path[i + 1]) {
+                    totalCost += edge.second;
+                    break;
+                }
+            }
+        }
+        cout << totalCost << endl;
+        cout << "Path: ";
+        for (int i = 0; i < path.size(); i++) {
+            cout << path[i];
+            if (i < path.size() - 1) cout << " -> ";
+        }
+        cout << endl;
+    }
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '5 5\n0 1 4\n0 2 2\n1 3 5\n2 3 1\n3 4 3\n6 5 4 3 0\n0 4', output: 'Path found!', requiredConstructs: ['vector', 'priority_queue', 'unordered_map', 'algorithm'] }
+      ],
+      completed: false
+    },
+    {
+      id: 'edmonds-karp-max-flow',
+      title: 'Edmonds-Karp Maximum Flow Algorithm',
+      description: 'Implement the Edmonds-Karp algorithm to find maximum flow in a flow network',
+      difficulty: 'advanced',
+      category: 'algorithms',
+      points: 100,
+      timeEstimate: '90 min',
+      problem: `Implement the Edmonds-Karp algorithm to find the maximum flow from a source to a sink 
+in a directed flow network.
+
+The Edmonds-Karp algorithm is a specific implementation of the Ford-Fulkerson method that uses 
+BFS to find augmenting paths, guaranteeing O(V * E^2) time complexity.
+
+A flow network is a directed graph where:
+- Each edge has a capacity (maximum flow it can carry)
+- Flow through an edge cannot exceed its capacity
+- Flow conservation: incoming flow = outgoing flow (except source and sink)
+- Source has only outgoing edges, sink has only incoming edges
+
+Example:
+Network with 4 nodes (0=source, 3=sink):
+0 -> 1: capacity 10
+0 -> 2: capacity 5
+1 -> 2: capacity 15
+1 -> 3: capacity 10
+2 -> 3: capacity 10
+Maximum flow: 15
+
+Requirements:
+- Use BFS to find augmenting paths
+- Maintain residual graph (remaining capacity)
+- Update flow along augmenting path
+- Return maximum flow value
+- Time complexity: O(V * E^2) where V is vertices, E is edges
+- Handle multiple edges and cycles`,
+      hints: [
+        'Create residual graph: residual[u][v] = capacity[u][v] - flow[u][v]',
+        'Use BFS to find path from source to sink in residual graph',
+        'Find minimum capacity (bottleneck) along the path',
+        'Update flow: flow[u][v] += bottleneck, flow[v][u] -= bottleneck (for residual)',
+        'Update residual: residual[u][v] -= bottleneck, residual[v][u] += bottleneck',
+        'Repeat until no augmenting path exists (BFS returns no path)',
+        'Maximum flow = sum of flows from source to all neighbors',
+        'Use parent array to reconstruct path from BFS',
+        'Initialize: flow and residual matrices, all flows start at 0',
+        'Residual graph allows reverse edges for flow cancellation'
+      ],
+      solution: `#include <iostream>
+#include <vector>
+#include <queue>
+#include <climits>
+#include <algorithm>
+using namespace std;
+
+bool bfs(vector<vector<int>>& residual, vector<int>& parent, int source, int sink, int n) {
+    vector<bool> visited(n, false);
+    queue<int> q;
+    
+    q.push(source);
+    visited[source] = true;
+    parent[source] = -1;
+    
+    while (!q.empty()) {
+        int u = q.front();
+        q.pop();
+        
+        for (int v = 0; v < n; v++) {
+            if (!visited[v] && residual[u][v] > 0) {
+                parent[v] = u;
+                visited[v] = true;
+                q.push(v);
+                
+                if (v == sink) {
+                    return true; // Found path to sink
+                }
+            }
+        }
+    }
+    
+    return false; // No path to sink
+}
+
+int edmondsKarp(vector<vector<int>>& capacity, int source, int sink, int n) {
+    // Initialize residual graph and flow
+    vector<vector<int>> residual(n, vector<int>(n, 0));
+    vector<vector<int>> flow(n, vector<int>(n, 0));
+    
+    // Copy capacities to residual graph
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            residual[i][j] = capacity[i][j];
+        }
+    }
+    
+    vector<int> parent(n);
+    int maxFlow = 0;
+    
+    // Find augmenting paths using BFS
+    while (bfs(residual, parent, source, sink, n)) {
+        // Find minimum residual capacity along the path
+        int pathFlow = INT_MAX;
+        int v = sink;
+        
+        while (v != source) {
+            int u = parent[v];
+            pathFlow = min(pathFlow, residual[u][v]);
+            v = u;
+        }
+        
+        // Update residual capacities and flows
+        v = sink;
+        while (v != source) {
+            int u = parent[v];
+            residual[u][v] -= pathFlow;
+            residual[v][u] += pathFlow; // Allow reverse flow
+            flow[u][v] += pathFlow;
+            flow[v][u] -= pathFlow; // Negative flow for reverse direction
+            v = u;
+        }
+        
+        maxFlow += pathFlow;
+    }
+    
+    return maxFlow;
+}
+
+int main() {
+    int n, edges, source, sink;
+    cout << "Enter number of nodes: ";
+    cin >> n;
+    cout << "Enter number of edges: ";
+    cin >> edges;
+    
+    vector<vector<int>> capacity(n, vector<int>(n, 0));
+    
+    cout << "Enter edges with capacities (format: from to capacity):" << endl;
+    for (int i = 0; i < edges; i++) {
+        int from, to, cap;
+        cin >> from >> to >> cap;
+        capacity[from][to] = cap;
+    }
+    
+    cout << "Enter source node: ";
+    cin >> source;
+    cout << "Enter sink node: ";
+    cin >> sink;
+    
+    int maxFlow = edmondsKarp(capacity, source, sink, n);
+    
+    cout << "Maximum flow from " << source << " to " << sink << ": " << maxFlow << endl;
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '4 5\n0 1 10\n0 2 5\n1 2 15\n1 3 10\n2 3 10\n0 3', output: 'Maximum flow from 0 to 3:', requiredConstructs: ['vector', 'queue', 'algorithm', 'climits'] }
+      ],
+      completed: false
     }
   ];
 
