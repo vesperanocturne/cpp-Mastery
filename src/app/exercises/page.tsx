@@ -5097,13 +5097,13 @@ int main() {
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case 'beginner':
-        return 'bg-green-100 text-green-800 hover:bg-green-200';
+        return 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-900/50';
       case 'intermediate':
-        return 'bg-blue-100 text-blue-800 hover:bg-blue-200';
+        return 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-900/50';
       case 'advanced':
-        return 'bg-purple-100 text-purple-800 hover:bg-purple-200';
+        return 'bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 hover:bg-purple-200 dark:hover:bg-purple-900/50';
       default:
-        return 'bg-gray-100 text-gray-800 hover:bg-gray-200';
+        return 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700';
     }
   };
 
@@ -5117,14 +5117,14 @@ int main() {
   }, 0);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-4">
+          <h1 className="text-4xl lg:text-5xl font-bold text-slate-900 dark:text-slate-100 mb-4">
             C++ Practice Exercises
           </h1>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-6">
+          <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto mb-6">
             Strengthen your C++ skills with hands-on coding exercises. 
             From basic syntax to advanced algorithms.
           </p>
@@ -5132,16 +5132,16 @@ int main() {
           {/* Stats */}
           <div className="flex justify-center space-x-8 text-center">
             <div>
-              <div className="text-2xl font-bold text-blue-600">{completedExercises.size}</div>
-              <div className="text-sm text-slate-600">Completed</div>
+              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{completedExercises.size}</div>
+              <div className="text-sm text-slate-600 dark:text-slate-400">Completed</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-green-600">{totalPoints}</div>
-              <div className="text-sm text-slate-600">Points Earned</div>
+              <div className="text-2xl font-bold text-green-600 dark:text-green-400">{totalPoints}</div>
+              <div className="text-sm text-slate-600 dark:text-slate-400">Points Earned</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-purple-600">{exercises.length}</div>
-              <div className="text-sm text-slate-600">Total Exercises</div>
+              <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">{exercises.length}</div>
+              <div className="text-sm text-slate-600 dark:text-slate-400">Total Exercises</div>
             </div>
           </div>
         </div>
@@ -5173,22 +5173,22 @@ int main() {
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center space-x-3 mb-2">
-                      <CardTitle className="text-xl font-semibold text-slate-900">
+                      <CardTitle className="text-xl font-semibold text-slate-900 dark:text-slate-100">
                         {exercise.title}
                       </CardTitle>
                       <Badge className={getDifficultyColor(exercise.difficulty)}>
                         {exercise.difficulty}
                       </Badge>
                       {completedExercises.has(exercise.id) && (
-                        <Badge className="bg-green-100 text-green-800">
+                        <Badge className="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">
                           Completed
                         </Badge>
                       )}
                     </div>
-                    <CardDescription className="text-slate-600 mb-3">
+                    <CardDescription className="text-slate-600 dark:text-slate-400 mb-3">
                       {exercise.description}
                     </CardDescription>
-                    <div className="flex items-center space-x-4 text-sm text-slate-500">
+                    <div className="flex items-center space-x-4 text-sm text-slate-500 dark:text-slate-400">
                       <span className="flex items-center space-x-1">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -5221,18 +5221,18 @@ int main() {
 
                   <TabsContent value="problem" className="mt-4">
                     <div className="space-y-4">
-                      <div className="bg-slate-50 p-4 rounded-lg">
-                        <pre className="whitespace-pre-wrap text-sm text-slate-700 font-mono">
+                      <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg">
+                        <pre className="whitespace-pre-wrap text-sm text-slate-700 dark:text-slate-300 font-mono">
                           {exercise.problem}
                         </pre>
                       </div>
                       
                       {exercise.testCases.length > 0 && (
                         <div>
-                          <h4 className="font-medium text-slate-900 mb-2">Test Cases:</h4>
+                          <h4 className="font-medium text-slate-900 dark:text-slate-100 mb-2">Test Cases:</h4>
                           <div className="space-y-2">
                             {exercise.testCases.map((testCase, index) => (
-                              <div key={index} className="bg-slate-100 p-3 rounded text-sm">
+                              <div key={index} className="bg-slate-100 dark:bg-slate-800 p-3 rounded text-sm">
                                 <div><strong>Input:</strong> {testCase.input || 'None'}</div>
                                 {testCase.output && (
                                   <div><strong>Expected Output:</strong> {testCase.output}</div>
@@ -5254,11 +5254,11 @@ int main() {
                   <TabsContent value="hints" className="mt-4">
                     <div className="space-y-3">
                       {exercise.hints.map((hint, index) => (
-                        <div key={index} className="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg">
-                          <div className="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-medium">
+                        <div key={index} className="flex items-start space-x-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                          <div className="flex-shrink-0 w-6 h-6 bg-blue-500 dark:bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-medium">
                             {index + 1}
                           </div>
-                          <p className="text-sm text-slate-700">{hint}</p>
+                          <p className="text-sm text-slate-700 dark:text-slate-300">{hint}</p>
                         </div>
                       ))}
                     </div>
@@ -5316,43 +5316,43 @@ int main() {
         </div>
 
         {/* Progress Section */}
-        <div className="mt-16 bg-white rounded-2xl shadow-lg p-8">
+        <div className="mt-16 bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-8">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-4">
               Your Progress
             </h2>
-            <p className="text-lg text-slate-600">
+            <p className="text-lg text-slate-600 dark:text-slate-300">
               Keep practicing to improve your C++ skills
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="text-center p-6 bg-green-50 rounded-xl">
-              <div className="text-3xl font-bold text-green-600 mb-2">
+            <div className="text-center p-6 bg-green-50 dark:bg-green-900/20 rounded-xl">
+              <div className="text-3xl font-bold text-green-600 dark:text-green-400 mb-2">
                 {exercises.filter(e => e.difficulty === 'beginner' && completedExercises.has(e.id)).length}
               </div>
-              <div className="text-slate-600">Beginner Exercises</div>
-              <div className="text-sm text-slate-500">
+              <div className="text-slate-600 dark:text-slate-300">Beginner Exercises</div>
+              <div className="text-sm text-slate-500 dark:text-slate-400">
                 of {exercises.filter(e => e.difficulty === 'beginner').length} completed
               </div>
             </div>
 
-            <div className="text-center p-6 bg-blue-50 rounded-xl">
-              <div className="text-3xl font-bold text-blue-600 mb-2">
+            <div className="text-center p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
+              <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">
                 {exercises.filter(e => e.difficulty === 'intermediate' && completedExercises.has(e.id)).length}
               </div>
-              <div className="text-slate-600">Intermediate Exercises</div>
-              <div className="text-sm text-slate-500">
+              <div className="text-slate-600 dark:text-slate-300">Intermediate Exercises</div>
+              <div className="text-sm text-slate-500 dark:text-slate-400">
                 of {exercises.filter(e => e.difficulty === 'intermediate').length} completed
               </div>
             </div>
 
-            <div className="text-center p-6 bg-purple-50 rounded-xl">
-              <div className="text-3xl font-bold text-purple-600 mb-2">
+            <div className="text-center p-6 bg-purple-50 dark:bg-purple-900/20 rounded-xl">
+              <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">
                 {exercises.filter(e => e.difficulty === 'advanced' && completedExercises.has(e.id)).length}
               </div>
-              <div className="text-slate-600">Advanced Exercises</div>
-              <div className="text-sm text-slate-500">
+              <div className="text-slate-600 dark:text-slate-300">Advanced Exercises</div>
+              <div className="text-sm text-slate-500 dark:text-slate-400">
                 of {exercises.filter(e => e.difficulty === 'advanced').length} completed
               </div>
             </div>

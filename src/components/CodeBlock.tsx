@@ -154,11 +154,11 @@ export function CodeBlock({
   const formattedLines = formatCode(code);
 
   return (
-    <Card className="w-full overflow-hidden border border-slate-200 shadow-sm">
-      <CardHeader className="bg-slate-50 border-b border-slate-200 pb-3">
+    <Card className="w-full overflow-hidden border border-slate-200 dark:border-slate-700 shadow-sm">
+      <CardHeader className="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700 pb-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <CardTitle className="text-lg font-semibold text-slate-800">
+            <CardTitle className="text-lg font-semibold text-slate-800 dark:text-slate-100">
               {title}
             </CardTitle>
             <Badge variant="secondary" className="text-xs font-mono">
@@ -175,7 +175,7 @@ export function CodeBlock({
           </Button>
         </div>
         {description && (
-          <p className="text-sm text-slate-600 mt-2">{description}</p>
+          <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">{description}</p>
         )}
       </CardHeader>
       

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
 import { MobileNav } from "@/components/MobileNav";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
@@ -19,57 +21,62 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body className={cn(inter.className, "min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 antialiased")}>
-        <div className="relative min-h-screen">
-          {/* Navigation */}
-          <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex justify-between items-center h-16">
-                {/* Logo */}
-                <Link href="/" className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-lg flex items-center justify-center">
-                    <span className="text-white font-bold text-sm">C++</span>
+      <body className={cn(inter.className, "min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 antialiased")}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <div className="relative min-h-screen">
+            {/* Navigation */}
+            <nav className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex justify-between items-center h-16">
+                  {/* Logo */}
+                  <Link href="/" className="flex items-center space-x-2">
+                    <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-lg flex items-center justify-center">
+                      <span className="text-white font-bold text-sm">C++</span>
+                    </div>
+                    <span className="text-xl font-bold text-slate-800 dark:text-slate-100">C++ Mastery</span>
+                  </Link>
+
+                  {/* Desktop Navigation */}
+                  <div className="hidden md:flex items-center space-x-6">
+                    <Link href="/courses" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors">
+                      Courses
+                    </Link>
+                    <Link href="/exercises" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors">
+                      Exercises
+                    </Link>
+                    <Link href="/resources" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors">
+                      Resources
+                    </Link>
+                    <Link href="/" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors">
+                      Home
+                    </Link>
+                    <ThemeToggle />
+                    <Link href="/courses" className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-6 py-2 rounded-lg font-medium hover:from-blue-700 hover:to-cyan-600 transition-all duration-200 shadow-md hover:shadow-lg">
+                      Get Started
+                    </Link>
                   </div>
-                  <span className="text-xl font-bold text-slate-800">C++ Mastery</span>
-                </Link>
 
-                {/* Desktop Navigation */}
-                <div className="hidden md:flex items-center space-x-8">
-                  <Link href="/courses" className="text-slate-600 hover:text-blue-600 font-medium transition-colors">
-                    Courses
-                  </Link>
-                  <Link href="/exercises" className="text-slate-600 hover:text-blue-600 font-medium transition-colors">
-                    Exercises
-                  </Link>
-                  <Link href="/resources" className="text-slate-600 hover:text-blue-600 font-medium transition-colors">
-                    Resources
-                  </Link>
-                  <Link href="/" className="text-slate-600 hover:text-blue-600 font-medium transition-colors">
-                    Home
-                  </Link>
-                  <Link href="/courses" className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-6 py-2 rounded-lg font-medium hover:from-blue-700 hover:to-cyan-600 transition-all duration-200 shadow-md hover:shadow-lg">
-                    Get Started
-                  </Link>
+                  {/* Mobile Menu */}
+                  <div className="flex md:hidden items-center space-x-2">
+                    <ThemeToggle />
+                    <MobileNav />
+                  </div>
                 </div>
-
-                {/* Mobile Menu */}
-                <MobileNav />
               </div>
-            </div>
-          </nav>
+            </nav>
 
-          {/* Main Content */}
-          <main className="relative">
-            {children}
-          </main>
+            {/* Main Content */}
+            <main className="relative">
+              {children}
+            </main>
 
-          {/* Footer */}
-          <footer className="bg-slate-900 text-white mt-20">
+            {/* Footer */}
+            <footer className="bg-slate-900 dark:bg-slate-950 text-white mt-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                 {/* Brand */}
@@ -109,12 +116,13 @@ export default function RootLayout({
                 </div>
               </div>
 
-              <div className="border-t border-slate-800 mt-8 pt-8 text-center text-slate-400">
+              <div className="border-t border-slate-800 dark:border-slate-700 mt-8 pt-8 text-center text-slate-400">
                 <p>&copy; 2024 C++ Mastery. All rights reserved. Built with passion for C++ education.</p>
               </div>
             </div>
           </footer>
-        </div>
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );

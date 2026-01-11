@@ -78,19 +78,19 @@ export default function HomePage() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative py-20 lg:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-cyan-500/5 to-purple-600/10"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-cyan-500/5 to-purple-600/10 dark:from-blue-600/20 dark:via-cyan-500/10 dark:to-purple-600/20"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Hero Content */}
             <div className="space-y-8">
               <div className="space-y-4">
-                <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-200">
+                <Badge className="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-900/50">
                   New: Modern C++20 Features Added
                 </Badge>
-                <h1 className="text-4xl lg:text-6xl font-bold text-slate-900 leading-tight">
+                <h1 className="text-4xl lg:text-6xl font-bold text-slate-900 dark:text-slate-100 leading-tight">
                   Master <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">C++</span> Programming
                 </h1>
-                <p className="text-xl text-slate-600 leading-relaxed">
+                <p className="text-xl text-slate-600 dark:text-slate-300 leading-relaxed">
                   From absolute beginner to advanced developer. Learn C++ with our comprehensive, 
                   hands-on curriculum designed by industry experts.
                 </p>
@@ -103,7 +103,7 @@ export default function HomePage() {
                   </Button>
                 </Link>
                 <Link href="/courses">
-                  <Button variant="outline" size="lg" className="border-slate-300 text-slate-700 hover:bg-slate-50 px-8 py-3 text-lg font-medium">
+                  <Button variant="outline" size="lg" className="border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 px-8 py-3 text-lg font-medium">
                     View Course Preview
                   </Button>
                 </Link>
@@ -113,8 +113,8 @@ export default function HomePage() {
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 pt-8">
                 {stats.map((stat, index) => (
                   <div key={index} className="text-center">
-                    <div className="text-2xl lg:text-3xl font-bold text-slate-900">{stat.value}</div>
-                    <div className="text-sm text-slate-600">{stat.label}</div>
+                    <div className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-slate-100">{stat.value}</div>
+                    <div className="text-sm text-slate-600 dark:text-slate-400">{stat.label}</div>
                   </div>
                 ))}
               </div>
@@ -122,27 +122,27 @@ export default function HomePage() {
 
             {/* Hero Image */}
             <div className="relative">
-              <div className="relative z-10 bg-white rounded-2xl shadow-2xl p-6 transform rotate-3 hover:rotate-0 transition-transform duration-300">
+              <div className="relative z-10 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-6 transform rotate-3 hover:rotate-0 transition-transform duration-300">
                 <img 
                   src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b4fa9f88-43bf-4b6b-9be2-476e1fb6ac36.png" 
                   alt="Modern C++ development environment with code editor interface"
                   className="w-full h-auto rounded-lg"
                 />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-2xl transform rotate-6 opacity-20"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-2xl transform rotate-6 opacity-20 dark:opacity-10"></div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Learning Paths Section */}
-      <section id="courses" className="py-20 bg-white">
+      <section id="courses" className="py-20 bg-white dark:bg-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
+            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4">
               Choose Your Learning Path
             </h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+            <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
               Structured courses designed to take you from beginner to expert, 
               with hands-on projects and real-world applications.
             </p>
@@ -173,24 +173,24 @@ export default function HomePage() {
                 </div>
 
                 <CardHeader>
-                  <CardTitle className="text-xl font-bold text-slate-900">
+                  <CardTitle className="text-xl font-bold text-slate-900 dark:text-slate-100">
                     {path.title}
                   </CardTitle>
-                  <CardDescription className="text-slate-600">
+                  <CardDescription className="text-slate-600 dark:text-slate-400">
                     {path.description}
                   </CardDescription>
                 </CardHeader>
 
                 <CardContent className="space-y-4">
-                  <div className="flex justify-between text-sm text-slate-600">
+                  <div className="flex justify-between text-sm text-slate-600 dark:text-slate-400">
                     <span>{path.lessons} lessons</span>
                     <span>{path.duration}</span>
                   </div>
 
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
-                      <span className="text-slate-600">Progress</span>
-                      <span className="text-slate-900 font-medium">{path.progress}%</span>
+                      <span className="text-slate-600 dark:text-slate-400">Progress</span>
+                      <span className="text-slate-900 dark:text-slate-100 font-medium">{path.progress}%</span>
                     </div>
                     <Progress value={path.progress} className="h-2" />
                   </div>
@@ -203,7 +203,7 @@ export default function HomePage() {
                     ))}
                   </div>
 
-                  <Button className="w-full mt-4 bg-slate-900 hover:bg-slate-800 text-white">
+                  <Button className="w-full mt-4 bg-slate-900 dark:bg-slate-700 hover:bg-slate-800 dark:hover:bg-slate-600 text-white">
                     Start Course
                   </Button>
                 </CardContent>
@@ -215,13 +215,13 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-slate-50">
+      <section className="py-20 bg-slate-50 dark:bg-slate-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
+            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4">
               Why Choose C++ Mastery?
             </h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+            <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
               Our platform combines proven teaching methods with modern technology 
               to deliver the most effective C++ learning experience.
             </p>
@@ -239,10 +239,10 @@ export default function HomePage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/20 to-transparent"></div>
                 </div>
                 <CardContent className="p-6">
-                  <h3 className="text-xl font-bold text-slate-900 mb-3">
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3">
                     {feature.title}
                   </h3>
-                  <p className="text-slate-600 leading-relaxed">
+                  <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                     {feature.description}
                   </p>
                 </CardContent>
