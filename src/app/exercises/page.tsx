@@ -2691,6 +2691,198 @@ int main() {
         { input: '', output: 'Inorder: 20 30 40 50 70', requiredConstructs: ['class', 'struct', 'recursion'] }
       ],
       completed: false
+    },
+    {
+      id: 'lru-cache-implementation',
+      title: 'LRU Cache Implementation',
+      description: 'Implement a Least Recently Used (LRU) Cache combining hash map and doubly linked list for O(1) operations',
+      difficulty: 'advanced',
+      category: 'data-structures',
+      points: 100,
+      timeEstimate: '90 min',
+      problem: `Implement an LRU (Least Recently Used) Cache that supports get() and put() operations in O(1) time complexity.
+
+An LRU cache evicts the least recently used item when the cache reaches its capacity.
+
+Requirements:
+- Implement get(key): Return value if key exists, -1 otherwise. Move accessed item to front.
+- Implement put(key, value): Insert or update value. If cache is full, remove least recently used item.
+- All operations must be O(1) time complexity
+- Use a combination of hash map and doubly linked list
+- Cache has a maximum capacity
+
+Operations:
+- get(key): Get value and mark as recently used
+- put(key, value): Add/update value and mark as recently used
+- display(): Show current cache state
+
+This problem requires:
+- Hash map for O(1) key lookup
+- Doubly linked list for O(1) insertion/deletion
+- Combining both data structures efficiently
+- Managing cache capacity and eviction policy`,
+      hints: [
+        'Use a hash map to store key -> node mappings for O(1) access',
+        'Use a doubly linked list to maintain access order (most recent at head)',
+        'For get(): Find node in hash map, move to head of list',
+        'For put(): If exists, update and move to head. If new and full, remove tail, add to head',
+        'Maintain both head and tail pointers for efficient list operations',
+        'Each node needs: key, value, prev, next pointers',
+        'Hash map stores: key -> pointer to node in list',
+        'When capacity reached, remove tail node (LRU) and its hash map entry'
+      ],
+      solution: `#include <iostream>
+#include <unordered_map>
+using namespace std;
+
+struct Node {
+    int key;
+    int value;
+    Node* prev;
+    Node* next;
+    
+    Node(int k, int v) {
+        key = k;
+        value = v;
+        prev = nullptr;
+        next = nullptr;
+    }
+};
+
+class LRUCache {
+private:
+    int capacity;
+    unordered_map<int, Node*> cache;
+    Node* head;
+    Node* tail;
+    
+    void addToHead(Node* node) {
+        node->prev = nullptr;
+        node->next = head;
+        
+        if (head != nullptr) {
+            head->prev = node;
+        }
+        head = node;
+        
+        if (tail == nullptr) {
+            tail = head;
+        }
+    }
+    
+    void removeNode(Node* node) {
+        if (node->prev != nullptr) {
+            node->prev->next = node->next;
+        } else {
+            head = node->next;
+        }
+        
+        if (node->next != nullptr) {
+            node->next->prev = node->prev;
+        } else {
+            tail = node->prev;
+        }
+    }
+    
+    void moveToHead(Node* node) {
+        removeNode(node);
+        addToHead(node);
+    }
+    
+    Node* removeTail() {
+        Node* lastNode = tail;
+        removeNode(lastNode);
+        return lastNode;
+    }
+
+public:
+    LRUCache(int cap) {
+        capacity = cap;
+        head = nullptr;
+        tail = nullptr;
+    }
+    
+    int get(int key) {
+        if (cache.find(key) == cache.end()) {
+            cout << "Key " << key << " not found" << endl;
+            return -1;
+        }
+        
+        Node* node = cache[key];
+        moveToHead(node);
+        cout << "Get(" << key << ") = " << node->value << endl;
+        return node->value;
+    }
+    
+    void put(int key, int value) {
+        if (cache.find(key) != cache.end()) {
+            // Key exists, update value and move to head
+            Node* node = cache[key];
+            node->value = value;
+            moveToHead(node);
+            cout << "Updated key " << key << " to value " << value << endl;
+        } else {
+            // New key
+            if (cache.size() >= capacity) {
+                // Remove LRU (tail)
+                Node* tailNode = removeTail();
+                cout << "Cache full. Evicting key " << tailNode->key << endl;
+                cache.erase(tailNode->key);
+                delete tailNode;
+            }
+            
+            // Add new node
+            Node* newNode = new Node(key, value);
+            addToHead(newNode);
+            cache[key] = newNode;
+            cout << "Added key " << key << " with value " << value << endl;
+        }
+    }
+    
+    void display() {
+        cout << "Cache state (most recent first): ";
+        Node* temp = head;
+        while (temp != nullptr) {
+            cout << "(" << temp->key << "," << temp->value << ") ";
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+    
+    ~LRUCache() {
+        Node* temp = head;
+        while (temp != nullptr) {
+            Node* next = temp->next;
+            delete temp;
+            temp = next;
+        }
+    }
+};
+
+int main() {
+    LRUCache cache(3);
+    
+    cache.put(1, 10);
+    cache.put(2, 20);
+    cache.put(3, 30);
+    cache.display();
+    
+    cache.get(2);
+    cache.display();
+    
+    cache.put(4, 40);
+    cache.display();
+    
+    cache.get(1);
+    cache.get(3);
+    cache.display();
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '', output: 'Cache state (most recent first):', requiredConstructs: ['class', 'struct', 'unordered_map', 'pointer'] }
+      ],
+      completed: false
     }
   ];
 
