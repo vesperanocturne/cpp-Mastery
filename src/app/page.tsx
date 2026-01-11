@@ -150,7 +150,7 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {learningPaths.map((path) => (
-              <a key={path.id} href={`/courses/${path.id === 1 ? 'beginner-cpp' : path.id === 2 ? 'intermediate-cpp' : 'advanced-cpp'}`}>
+              <Link key={path.id} href={`/courses/${path.id === 1 ? 'beginner-cpp' : path.id === 2 ? 'intermediate-cpp' : 'advanced-cpp'}`}>
                 <Card 
                   className={`relative overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 cursor-pointer ${
                     hoveredCard === path.id ? 'ring-2 ring-blue-500' : ''
@@ -208,7 +208,7 @@ export default function HomePage() {
                   </Button>
                 </CardContent>
                 </Card>
-              </a>
+              </Link>
             ))}
           </div>
         </div>
@@ -229,22 +229,24 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-              <div key={index} className="text-center group">
-                <div className="relative mb-6 overflow-hidden rounded-xl">
+              <Card key={index} className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 group">
+                <div className="relative overflow-hidden">
                   <img 
                     src={feature.image} 
                     alt={feature.title}
-                    className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
+                    className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/20 to-transparent"></div>
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">
-                  {feature.title}
-                </h3>
-                <p className="text-slate-600 leading-relaxed">
-                  {feature.description}
-                </p>
-              </div>
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-bold text-slate-900 mb-3">
+                    {feature.title}
+                  </h3>
+                  <p className="text-slate-600 leading-relaxed">
+                    {feature.description}
+                  </p>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>

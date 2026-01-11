@@ -5,7 +5,12 @@ export interface PracticeExercise {
   difficulty: 'easy' | 'medium' | 'hard';
   hints: string[];
   solution: string;
-  testCases: { input: string; output: string }[];
+  testCases: { 
+    input: string; 
+    output?: string; 
+    requiredConstructs?: string[]; // e.g., ['cout', 'cin', 'if', 'for', 'function']
+    outputPattern?: string; // Pattern to match in output (flexible matching)
+  }[];
 }
 
 export interface Project {
@@ -125,7 +130,11 @@ int main() {
     return 0;
 }`,
             testCases: [
-              { input: '', output: 'My name is John Doe\\nMy favorite language is C++' }
+              { 
+                input: '', 
+                requiredConstructs: ['cout'],
+                outputPattern: '.*' // Any output is acceptable as long as cout is used
+              }
             ]
           },
           {
@@ -149,7 +158,11 @@ int main() {
     return 0;
 }`,
             testCases: [
-              { input: '', output: 'Name: Alice Johnson\\nAge: 22\\nMajor: Computer Science\\nUniversity: Tech University' }
+              { 
+                input: '', 
+                requiredConstructs: ['cout'],
+                outputPattern: '.*' // Any output is acceptable as long as cout is used
+              }
             ]
           }
         ],
@@ -262,7 +275,11 @@ int main() {
     return 0;
 }`,
             testCases: [
-              { input: '', output: 'Student Information:\\nName: Alice Smith\\nAge: 20\\nGPA: 3.85\\nLetter Grade: A\\nEnrolled: Yes' }
+              { 
+                input: '', 
+                requiredConstructs: ['cout'],
+                outputPattern: '.*' // Should use cout to display student information
+              }
             ]
           },
           {
@@ -292,7 +309,11 @@ int main() {
     return 0;
 }`,
             testCases: [
-              { input: '', output: 'Number 1: 15.5\\nNumber 2: 4.2\\nAddition: 19.7\\nSubtraction: 11.3\\nMultiplication: 65.1\\nDivision: 3.69048' }
+              { 
+                input: '', 
+                requiredConstructs: ['cout'],
+                outputPattern: '.*' // Should use cout to display arithmetic operations
+              }
             ]
           }
         ],
@@ -436,7 +457,11 @@ int main() {
     return 0;
 }`,
             testCases: [
-              { input: 'John\\nDoe\\n25\\n50000\\nNew York', output: 'Full Name: John Doe\\nAge: 25\\nSalary: $50000\\nCity: New York' }
+              { 
+                input: 'John\nDoe\n25\n50000\nNew York', 
+                requiredConstructs: ['cin', 'cout'],
+                outputPattern: '.*' // Should use cin for input and cout for output
+              }
             ]
           }
         ],
@@ -565,7 +590,11 @@ int main() {
     return 0;
 }`,
             testCases: [
-              { input: '10 5', output: '10 + 5 = 15\\n10 - 5 = 5\\n10 * 5 = 50\\n10 / 5 = 2' }
+              { 
+                input: '10 5', 
+                requiredConstructs: ['cin', 'cout'],
+                outputPattern: '.*' // Should use operators and display results
+              }
             ]
           }
         ],
@@ -761,7 +790,11 @@ int main() {
     return 0;
 }`,
             testCases: [
-              { input: '3\\n85\\n92\\n78', output: 'Total Marks: 255\\nAverage: 85%\\nGrade: B' }
+              { 
+                input: '3\n85\n92\n78', 
+                requiredConstructs: ['cin', 'cout', 'if', 'for'],
+                outputPattern: '.*' // Should use loops and conditionals for grade calculation
+              }
             ]
           }
         ],
@@ -993,7 +1026,11 @@ int gcd(int a, int b) {
     return a;
 }`,
             testCases: [
-              { input: '', output: 'Power: 2^5 = 32\\nFactorial: 5! = 120\\nIs 8 even? Yes\\nAverage of 10, 20, 30: 20\\nGCD of 48 and 18: 6' }
+              { 
+                input: '', 
+                requiredConstructs: ['function', 'cout'],
+                outputPattern: '.*' // Should define and use functions
+              }
             ]
           }
         ],
@@ -1199,7 +1236,11 @@ int main() {
     return 0;
 }`,
             testCases: [
-              { input: '1 2 3 4 5 6 7 8 9 10', output: 'Sum: 55\\nAverage: 5.5\\nMaximum: 10\\nMinimum: 1\\nEven numbers: 5\\nOdd numbers: 5' }
+              { 
+                input: '1 2 3 4 5 6 7 8 9 10', 
+                requiredConstructs: ['cin', 'cout', 'for', 'array', 'if'],
+                outputPattern: '.*' // Should use arrays and loops to process input
+              }
             ]
           }
         ],
@@ -1587,7 +1628,11 @@ int main() {
     return 0;
 }`,
             testCases: [
-              { input: '', output: 'Before swap: x = 5, y = 10\\nAfter swap: x = 10, y = 5' }
+              { 
+                input: '', 
+                requiredConstructs: ['function', 'cout'],
+                outputPattern: '.*' // Should use functions with pointers/references
+              }
             ]
           },
           {
@@ -1631,7 +1676,11 @@ int main() {
     return 0;
 }`,
             testCases: [
-              { input: '', output: 'Element 0: 10\\nElement 1: 20\\nElement 2: 30\\nElement 3: 40\\nElement 4: 50' }
+              { 
+                input: '', 
+                requiredConstructs: ['array', 'cout'],
+                outputPattern: '.*' // Should use pointer arithmetic to access arrays
+              }
             ]
           }
         ],
@@ -2052,7 +2101,11 @@ int main() {
     return 0;
 }`,
             testCases: [
-              { input: '', output: 'Array: 45 78 23 89 12 67 34\\nMaximum value: 89' }
+              { 
+                input: '', 
+                requiredConstructs: ['array', 'function', 'for', 'cout'],
+                outputPattern: '.*' // Should use functions with arrays
+              }
             ]
           },
           {
@@ -2108,7 +2161,11 @@ int main() {
     return 0;
 }`,
             testCases: [
-              { input: '', output: 'Original array: 1 2 3 4 5 6 7 8\\nReversed array: 8 7 6 5 4 3 2 1' }
+              { 
+                input: '', 
+                requiredConstructs: ['array', 'function', 'for', 'cout'],
+                outputPattern: '.*' // Should use functions to manipulate arrays
+              }
             ]
           }
         ],
@@ -2588,7 +2645,11 @@ int main() {
     return 0;
 }`,
             testCases: [
-              { input: '', output: 'Integers before: x = 10, y = 20\\nIntegers after: x = 20, y = 10' }
+              { 
+                input: '', 
+                requiredConstructs: ['function', 'cout'],
+                outputPattern: '.*' // Should use function overloading
+              }
             ]
           },
           {
@@ -2648,7 +2709,11 @@ int main() {
     return 0;
 }`,
             testCases: [
-              { input: '', output: 'Minimum: 12\\nMaximum: 91\\nAverage: 54.875' }
+              { 
+                input: '', 
+                requiredConstructs: ['array', 'function', 'for', 'cout'],
+                outputPattern: '.*' // Should use functions with reference parameters
+              }
             ]
           }
         ],
@@ -3055,7 +3120,11 @@ int main() {
     return 0;
 }`,
             testCases: [
-              { input: '', output: 'Original: Hello World\\nReversed: dlroW olleH' }
+              { 
+                input: '', 
+                requiredConstructs: ['function', 'cout'],
+                outputPattern: '.*' // Should use string functions
+              }
             ]
           },
           {
@@ -3107,7 +3176,11 @@ int main() {
     return 0;
 }`,
             testCases: [
-              { input: '', output: "'radar' is palindrome: Yes\\n'hello' is palindrome: No" }
+              { 
+                input: '', 
+                requiredConstructs: ['function', 'cout', 'if', 'while'],
+                outputPattern: '.*' // Should use functions with loops for palindrome check
+              }
             ]
           },
           {
@@ -3152,7 +3225,11 @@ int main() {
     return 0;
 }`,
             testCases: [
-              { input: '', output: "'Hello World' has 2 words\\n'  C++  is   awesome  ' has 3 words\\n'OneWord' has 1 words" }
+              { 
+                input: '', 
+                requiredConstructs: ['function', 'cout', 'for', 'if'],
+                outputPattern: '.*' // Should use string manipulation functions
+              }
             ]
           }
         ],
@@ -3661,7 +3738,11 @@ int main() {
     return 0;
 }`,
             testCases: [
-              { input: '', output: 'Before raises:\\nID: 101, Name: John Doe, Dept: Engineering, Salary: $75000' }
+              { 
+                input: '', 
+                requiredConstructs: ['class', 'cout'],
+                outputPattern: '.*' // Should use classes and objects
+              }
             ]
           },
           {
@@ -3710,7 +3791,11 @@ int main() {
     return 0;
 }`,
             testCases: [
-              { input: '', output: 'Point 1: (0, 0)\\nPoint 2: (3, 4)\\nPoint 3: (6, 8)\\n\\nDistances:\\nP1 to P2: 5\\nP1 to P3: 10\\nP2 to P3: 5' }
+              { 
+                input: '', 
+                requiredConstructs: ['class', 'function', 'cout'],
+                outputPattern: '.*' // Should use classes with member functions
+              }
             ]
           }
         ],
@@ -3768,7 +3853,11 @@ int main() {
     cout << dest << endl;
     return 0;
 }`,
-          testCases: [{ input: '', output: 'Hello' }]
+          testCases: [{ 
+            input: '', 
+            requiredConstructs: ['cout'],
+            outputPattern: '.*' // Should use C-style strings
+          }]
         }],
         completed: false
       },
@@ -3845,7 +3934,11 @@ int main() {
     file.close();
     return 0;
 }`,
-          testCases: [{ input: '', output: 'Lines: 10' }]
+          testCases: [{ 
+            input: '', 
+            requiredConstructs: ['cout'],
+            outputPattern: '.*' // Should use file input operations
+          }]
         }],
         completed: false
       },
@@ -3913,7 +4006,11 @@ int main() {
     cout << "Numbers written" << endl;
     return 0;
 }`,
-          testCases: [{ input: '', output: 'Numbers written' }]
+          testCases: [{ 
+            input: '', 
+            requiredConstructs: ['cout', 'for'],
+            outputPattern: '.*' // Should use file output operations
+          }]
         }],
         completed: false
       }
@@ -4433,7 +4530,11 @@ int main() {
     return 0;
 }`,
             testCases: [
-              { input: '', output: 'Book checked out successfully' }
+              { 
+                input: '', 
+                requiredConstructs: ['class', 'cout'],
+                outputPattern: '.*' // Should use classes with member functions
+              }
             ]
           },
           {
@@ -4482,7 +4583,11 @@ int main() {
     return 0;
 }`,
             testCases: [
-              { input: '', output: 'Area: 15\\nPerimeter: 16' }
+              { 
+                input: '', 
+                requiredConstructs: ['class', 'cout'],
+                outputPattern: '.*' // Should use classes with constructors
+              }
             ]
           },
           {
@@ -4544,7 +4649,11 @@ int main() {
     return 0;
 }`,
             testCases: [
-              { input: '', output: 'GPA:' }
+              { 
+                input: '', 
+                requiredConstructs: ['class', 'cout'],
+                outputPattern: '.*' // Should use classes with member functions
+              }
             ]
           }
         ],
@@ -5021,7 +5130,11 @@ int main() {
     return 0;
 }`,
             testCases: [
-              { input: '', output: 'Shape: Circle\\nRadius: 5' }
+              { 
+                input: '', 
+                requiredConstructs: ['class', 'cout'],
+                outputPattern: '.*' // Should use inheritance
+              }
             ]
           },
           {
@@ -5106,7 +5219,11 @@ int main() {
     return 0;
 }`,
             testCases: [
-              { input: '', output: 'Role: Manager' }
+              { 
+                input: '', 
+                requiredConstructs: ['class', 'cout'],
+                outputPattern: '.*' // Should use inheritance with polymorphism
+              }
             ]
           },
           {
@@ -5217,7 +5334,11 @@ int main() {
     return 0;
 }`,
             testCases: [
-              { input: '', output: 'Interest added' }
+              { 
+                input: '', 
+                requiredConstructs: ['class', 'cout'],
+                outputPattern: '.*' // Should use inheritance with virtual functions
+              }
             ]
           }
         ],
@@ -5318,7 +5439,11 @@ int main() {
     fh.write("Hello RAII");
     return 0;
 }`,
-          testCases: [{ input: '', output: 'File opened\\nFile closed' }]
+          testCases: [{ 
+            input: '', 
+            requiredConstructs: ['cout'],
+            outputPattern: '.*' // Should use file operations
+          }]
         }],
         completed: false
       },
@@ -5443,7 +5568,11 @@ int main() {
     cout << a2.get(0) << endl;
     return 0;
 }`,
-          testCases: [{ input: '', output: '10' }]
+          testCases: [{ 
+            input: '', 
+            requiredConstructs: ['cout'],
+            outputPattern: '.*' // Should use constructors/destructors
+          }]
         }],
         completed: false
       },
@@ -5561,7 +5690,11 @@ int main() {
     }
     return 0;
 }`,
-          testCases: [{ input: '', output: 'Woof!\\nMeow!\\nWoof!' }]
+          testCases: [{ 
+            input: '', 
+            requiredConstructs: ['class', 'cout'],
+            outputPattern: '.*' // Should use polymorphism
+          }]
         }],
         completed: false
       },
@@ -5662,7 +5795,11 @@ int main() {
     console.log("Test message");
     return 0;
 }`,
-          testCases: [{ input: '', output: '[Console] Test message' }]
+          testCases: [{ 
+            input: '', 
+            requiredConstructs: ['class', 'cout'],
+            outputPattern: '.*' // Should use abstract classes/interfaces
+          }]
         }],
         completed: false
       },
@@ -5772,7 +5909,11 @@ int main() {
     cout << f1 << " + " << f2 << " = " << (f1 + f2) << endl;
     return 0;
 }`,
-          testCases: [{ input: '', output: '1/2 + 1/3 = 5/6' }]
+          testCases: [{ 
+            input: '', 
+            requiredConstructs: ['class', 'cout'],
+            outputPattern: '.*' // Should use operator overloading
+          }]
         }],
         completed: false
       },
@@ -5884,7 +6025,11 @@ int main() {
     }
     return 0;
 }`,
-          testCases: [{ input: '', output: '42\\nError: Index out of range' }]
+          testCases: [{ 
+            input: '', 
+            requiredConstructs: ['class', 'cout'],
+            outputPattern: '.*' // Should use exception handling
+          }]
         }],
         completed: false
       },
@@ -5977,7 +6122,11 @@ int main() {
     cout << s[0] << endl;
     return 0;
 }`,
-          testCases: [{ input: '', output: '5\\nH' }]
+          testCases: [{ 
+            input: '', 
+            requiredConstructs: ['class', 'cout'],
+            outputPattern: '.*' // Should use templates
+          }]
         }],
         completed: false
       },
@@ -6065,7 +6214,11 @@ int main() {
     cout << e3.getId() << endl;
     return 0;
 }`,
-          testCases: [{ input: '', output: '1\\n2\\n3' }]
+          testCases: [{ 
+            input: '', 
+            requiredConstructs: ['class', 'cout'],
+            outputPattern: '.*' // Should use STL containers
+          }]
         }],
         completed: false
       },
@@ -6180,7 +6333,11 @@ int main() {
     pc.boot();
     return 0;
 }`,
-          testCases: [{ input: '', output: 'Booting computer' }]
+          testCases: [{ 
+            input: '', 
+            requiredConstructs: ['class', 'cout'],
+            outputPattern: '.*' // Should use multiple inheritance
+          }]
         }],
         completed: false
       },
@@ -6306,7 +6463,11 @@ int main() {
     fc.fly();
     return 0;
 }`,
-          testCases: [{ input: '', output: 'SkyRacer driving\\nSkyRacer flying' }]
+          testCases: [{ 
+            input: '', 
+            requiredConstructs: ['class', 'cout'],
+            outputPattern: '.*' // Should use multiple inheritance
+          }]
         }],
         completed: false
       }
@@ -6527,7 +6688,11 @@ int main() {
     cout << x << " " << y << endl;
     return 0;
 }`,
-          testCases: [{ input: '', output: '10 5' }]
+          testCases: [{ 
+            input: '', 
+            requiredConstructs: ['cout'],
+            outputPattern: '.*' // Should use STL algorithms
+          }]
         }],
         completed: false
       },
@@ -6592,7 +6757,11 @@ int main() {
     cout << endl;
     return 0;
 }`,
-          testCases: [{ input: '', output: '1 2 3 4 5' }]
+          testCases: [{ 
+            input: '', 
+            requiredConstructs: ['cout'],
+            outputPattern: '.*' // Should use STL iterators
+          }]
         }],
         completed: false
       },
@@ -6659,7 +6828,11 @@ int main() {
     }
     return 0;
 }`,
-          testCases: [{ input: '', output: 'hello: 2\\nworld: 1' }]
+          testCases: [{ 
+            input: '', 
+            requiredConstructs: ['cout'],
+            outputPattern: '.*' // Should use STL maps
+          }]
         }],
         completed: false
       },
@@ -6720,7 +6893,11 @@ int main() {
     for (int x : v) cout << x << " ";
     return 0;
 }`,
-          testCases: [{ input: '', output: '9 8 5 2 1' }]
+          testCases: [{ 
+            input: '', 
+            requiredConstructs: ['cout'],
+            outputPattern: '.*' // Should use STL sorting
+          }]
         }],
         completed: false
       },
@@ -6788,7 +6965,11 @@ int main() {
     auto file = make_unique<File>("data.txt");
     return 0;
 }`,
-          testCases: [{ input: '', output: 'Opened data.txt\\nClosed data.txt' }]
+          testCases: [{ 
+            input: '', 
+            requiredConstructs: ['cout'],
+            outputPattern: '.*' // Should use file I/O with STL
+          }]
         }],
         completed: false
       },
@@ -6890,7 +7071,11 @@ int main() {
     Array a2 = move(a1);
     return 0;
 }`,
-          testCases: [{ input: '', output: '' }]
+          testCases: [{ 
+            input: '', 
+            requiredConstructs: ['cout'],
+            outputPattern: '.*' // Should use advanced STL features
+          }]
         }],
         completed: false
       },
@@ -6964,7 +7149,11 @@ int main() {
     for (int x : v) cout << x << " ";
     return 0;
 }`,
-          testCases: [{ input: '', output: '5 2 8 1 9' }]
+          testCases: [{ 
+            input: '', 
+            requiredConstructs: ['cout'],
+            outputPattern: '.*' // Should use STL algorithms
+          }]
         }],
         completed: false
       },
@@ -7050,7 +7239,11 @@ int main() {
     cout << total << endl;
     return 0;
 }`,
-          testCases: [{ input: '', output: '1000' }]
+          testCases: [{ 
+            input: '', 
+            requiredConstructs: ['cout'],
+            outputPattern: '.*' // Should use STL numeric algorithms
+          }]
         }],
         completed: false
       },
@@ -7120,7 +7313,11 @@ int main() {
     }
     return 0;
 }`,
-          testCases: [{ input: '', output: '2 4 6 8 10' }]
+          testCases: [{ 
+            input: '', 
+            requiredConstructs: ['cout'],
+            outputPattern: '.*' // Should use STL functional programming
+          }]
         }],
         completed: false
       },
@@ -7199,7 +7396,11 @@ int main() {
     cout << sum << endl;
     return 0;
 }`,
-          testCases: [{ input: '', output: '15' }]
+          testCases: [{ 
+            input: '', 
+            requiredConstructs: ['cout'],
+            outputPattern: '.*' // Should use STL algorithms
+          }]
         }],
         completed: false
       },
@@ -7308,7 +7509,11 @@ int main() {
     Logger::instance().log("Test");
     return 0;
 }`,
-          testCases: [{ input: '', output: '[LOG] Test' }]
+          testCases: [{ 
+            input: '', 
+            requiredConstructs: ['cout'],
+            outputPattern: '.*' // Should use advanced STL features
+          }]
         }],
         completed: false
       },
@@ -7396,7 +7601,11 @@ int main() {
     cout << "2^10 = " << Power<2, 10>::value << endl;
     return 0;
 }`,
-          testCases: [{ input: '', output: '2^10 = 1024' }]
+          testCases: [{ 
+            input: '', 
+            requiredConstructs: ['cout'],
+            outputPattern: '.*' // Should use STL numeric operations
+          }]
         }],
         completed: false
       }

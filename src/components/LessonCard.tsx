@@ -166,17 +166,15 @@ export function LessonCard({ lesson, onComplete, isExpanded = false }: LessonCar
                 Mark as Complete
               </Button>
             )}
-            <Button 
-              variant="outline" 
-              size="sm"
-              className="sm:w-auto"
-              onClick={() => {
-                // Simulate practice mode
-                console.log(`Practice mode for: ${lesson.id}`);
-              }}
-            >
-              Practice
-            </Button>
+            <Link href={`/lessons/${lesson.id}?tab=practice`}>
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="sm:w-auto"
+              >
+                Practice
+              </Button>
+            </Link>
           </div>
         </CardContent>
       )}

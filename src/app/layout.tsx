@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
+import { MobileNav } from "@/components/MobileNav";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
@@ -56,14 +57,8 @@ export default function RootLayout({
                   </Link>
                 </div>
 
-                {/* Mobile Menu Button */}
-                <div className="md:hidden">
-                  <button className="text-slate-600 hover:text-blue-600 p-2">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                  </button>
-                </div>
+                {/* Mobile Menu */}
+                <MobileNav />
               </div>
             </div>
           </nav>

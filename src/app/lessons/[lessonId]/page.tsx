@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CodeBlock } from "@/components/CodeBlock";
+import { IDE } from "@/components/IDE";
 import { expandedCourses } from "@/lib/expandedCourseData";
 
 export default function LessonDetailPage() {
@@ -146,9 +147,10 @@ export default function LessonDetailPage() {
 
         {/* Lesson Content */}
         <Tabs defaultValue="content" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="content">Lesson Content</TabsTrigger>
             <TabsTrigger value="code">Code Examples</TabsTrigger>
+            <TabsTrigger value="editor">Try It Yourself</TabsTrigger>
             <TabsTrigger value="practice">Practice</TabsTrigger>
           </TabsList>
 
@@ -232,6 +234,21 @@ export default function LessonDetailPage() {
             )}
           </TabsContent>
 
+          <TabsContent value="editor" className="mt-6">
+            <IDE
+              initialCode={lesson.codeExample || `#include <iostream>
+using namespace std;
+
+int main() {
+    // Try modifying the code from the example above
+    // Experiment and see what happens!
+    cout << "Hello, C++!" << endl;
+    return 0;
+}`}
+              title={`${lesson.title} - Interactive Editor`}
+            />
+          </TabsContent>
+
           <TabsContent value="practice" className="mt-6">
             <div className="space-y-6">
               {lesson.practiceExercises && lesson.practiceExercises.length > 0 ? (
@@ -254,9 +271,10 @@ export default function LessonDetailPage() {
                     </CardHeader>
                     <CardContent>
                       <Tabs defaultValue="problem" className="w-full">
-                        <TabsList className="grid w-full grid-cols-3">
+                        <TabsList className="grid w-full grid-cols-4">
                           <TabsTrigger value="problem">Problem</TabsTrigger>
                           <TabsTrigger value="hints">Hints</TabsTrigger>
+                          <TabsTrigger value="editor">Code Editor</TabsTrigger>
                           <TabsTrigger value="solution">Solution</TabsTrigger>
                         </TabsList>
 
@@ -273,7 +291,15 @@ export default function LessonDetailPage() {
                                   {exercise.testCases.map((testCase, testIndex) => (
                                     <div key={testIndex} className="bg-slate-100 p-3 rounded text-sm">
                                       <div><strong>Input:</strong> {testCase.input || 'None'}</div>
-                                      <div><strong>Expected Output:</strong> {testCase.output}</div>
+                                      {testCase.output && (
+                                        <div><strong>Expected Output:</strong> {testCase.output}</div>
+                                      )}
+                                      {testCase.requiredConstructs && testCase.requiredConstructs.length > 0 && (
+                                        <div><strong>Required Constructs:</strong> {testCase.requiredConstructs.join(', ')}</div>
+                                      )}
+                                      {testCase.outputPattern && (
+                                        <div><strong>Output Pattern:</strong> {testCase.outputPattern}</div>
+                                      )}
                                     </div>
                                   ))}
                                 </div>
@@ -295,6 +321,25 @@ export default function LessonDetailPage() {
                           </div>
                         </TabsContent>
 
+                        <TabsContent value="editor" className="mt-4">
+                          <IDE
+                            initialCode={`#include <iostream>
+using namespace std;
+
+int main() {
+    // Write your solution here
+    // ${exercise.description}
+    
+    return 0;
+}`}
+                            problem={exercise.description}
+                            hints={exercise.hints}
+                            solution={exercise.solution}
+                            testCases={exercise.testCases}
+                            title={`${exercise.title} - Code Editor`}
+                          />
+                        </TabsContent>
+
                         <TabsContent value="solution" className="mt-4">
                           <CodeBlock 
                             code={exercise.solution}
@@ -305,10 +350,24 @@ export default function LessonDetailPage() {
                       </Tabs>
 
                       <div className="flex gap-3 mt-6 pt-4 border-t border-slate-200">
-                        <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-                          Try Exercise
+                        <Button 
+                          className="bg-blue-600 hover:bg-blue-700 text-white"
+                          onClick={() => {
+                            // Switch to editor tab - this will be handled by the IDE component's internal tabs
+                            const editorButton = document.querySelector(`[data-exercise-id="${exercise.id}"] [value="editor"]`) as HTMLElement;
+                            if (editorButton) {
+                              editorButton.click();
+                            }
+                          }}
+                        >
+                          Open in Editor
                         </Button>
-                        <Button variant="outline">
+                        <Button 
+                          variant="outline"
+                          onClick={() => {
+                            alert(`Exercise "${exercise.title}" marked as complete! ✅`);
+                          }}
+                        >
                           Mark Complete
                         </Button>
                       </div>

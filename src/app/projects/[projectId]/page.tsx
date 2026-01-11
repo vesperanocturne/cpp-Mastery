@@ -400,7 +400,17 @@ export default function ProjectDetailPage() {
               ← Back to Course
             </Button>
           </Link>
-          <Button>
+          <Button 
+            onClick={() => {
+              if (progress === 100) {
+                alert('Congratulations! Your project has been submitted successfully! 🎉');
+              } else {
+                alert(`Complete your project first! Current progress: ${progress}%`);
+              }
+            }}
+            disabled={progress < 100}
+            className={progress === 100 ? "bg-green-600 hover:bg-green-700" : ""}
+          >
             Submit Project →
           </Button>
         </div>

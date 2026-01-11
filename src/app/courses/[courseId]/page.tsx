@@ -251,7 +251,7 @@ export default function CourseDetailPage() {
                         <CardDescription>Additional exercises to reinforce learning</CardDescription>
                       </CardHeader>
                       <CardContent>
-                        <Link href="/exercises">
+                        <Link href="/exercises" className="w-full block">
                           <Button className="w-full">View Exercises</Button>
                         </Link>
                       </CardContent>

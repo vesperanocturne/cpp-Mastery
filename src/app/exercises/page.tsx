@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CodeBlock } from "@/components/CodeBlock";
+import { IDE } from "@/components/IDE";
 
 interface Exercise {
   id: string;
@@ -18,13 +19,19 @@ interface Exercise {
   problem: string;
   hints: string[];
   solution: string;
-  testCases: { input: string; output: string }[];
+  testCases: { 
+    input: string; 
+    output?: string; 
+    requiredConstructs?: string[];
+    outputPattern?: string;
+  }[];
   completed: boolean;
 }
 
 export default function ExercisesPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [completedExercises, setCompletedExercises] = useState<Set<string>>(new Set());
+  const [activeExerciseTab, setActiveExerciseTab] = useState<Record<string, string>>({});
 
   const exercises: Exercise[] = [
     {
@@ -445,10 +452,15 @@ int main() {
               </CardHeader>
 
               <CardContent>
-                <Tabs defaultValue="problem" className="w-full">
-                  <TabsList className="grid w-full grid-cols-3">
+                <Tabs 
+                  value={activeExerciseTab[exercise.id] || "problem"} 
+                  onValueChange={(value) => setActiveExerciseTab(prev => ({ ...prev, [exercise.id]: value }))}
+                  className="w-full"
+                >
+                  <TabsList className="grid w-full grid-cols-4">
                     <TabsTrigger value="problem">Problem</TabsTrigger>
                     <TabsTrigger value="hints">Hints</TabsTrigger>
+                    <TabsTrigger value="editor">Code Editor</TabsTrigger>
                     <TabsTrigger value="solution">Solution</TabsTrigger>
                   </TabsList>
 
@@ -467,7 +479,15 @@ int main() {
                             {exercise.testCases.map((testCase, index) => (
                               <div key={index} className="bg-slate-100 p-3 rounded text-sm">
                                 <div><strong>Input:</strong> {testCase.input || 'None'}</div>
-                                <div><strong>Expected Output:</strong> {testCase.output}</div>
+                                {testCase.output && (
+                                  <div><strong>Expected Output:</strong> {testCase.output}</div>
+                                )}
+                                {testCase.requiredConstructs && testCase.requiredConstructs.length > 0 && (
+                                  <div><strong>Required Constructs:</strong> {testCase.requiredConstructs.join(', ')}</div>
+                                )}
+                                {testCase.outputPattern && (
+                                  <div><strong>Output Pattern:</strong> {testCase.outputPattern}</div>
+                                )}
                               </div>
                             ))}
                           </div>
@@ -489,6 +509,25 @@ int main() {
                     </div>
                   </TabsContent>
 
+                  <TabsContent value="editor" className="mt-4">
+                    <IDE
+                      initialCode={`#include <iostream>
+using namespace std;
+
+int main() {
+    // Write your solution here
+    // ${exercise.description}
+    
+    return 0;
+}`}
+                      problem={exercise.problem}
+                      hints={exercise.hints}
+                      solution={exercise.solution}
+                      testCases={exercise.testCases}
+                      title={`${exercise.title} - Code Editor`}
+                    />
+                  </TabsContent>
+
                   <TabsContent value="solution" className="mt-4">
                     <CodeBlock 
                       code={exercise.solution}
@@ -502,10 +541,10 @@ int main() {
                   <Button 
                     className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
                     onClick={() => {
-                      console.log(`Starting exercise: ${exercise.id}`);
+                      setActiveExerciseTab(prev => ({ ...prev, [exercise.id]: "editor" }));
                     }}
                   >
-                    Start Exercise
+                    Open in Editor
                   </Button>
                   {!completedExercises.has(exercise.id) && (
                     <Button 

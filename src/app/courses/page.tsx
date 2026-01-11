@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -211,7 +212,9 @@ export default function CoursesPage() {
                         <CardDescription>Additional exercises to reinforce learning</CardDescription>
                       </CardHeader>
                       <CardContent>
-                        <Button className="w-full">View Exercises</Button>
+                        <Link href="/exercises" className="w-full">
+                          <Button className="w-full">View Exercises</Button>
+                        </Link>
                       </CardContent>
                     </Card>
                   </div>
@@ -241,7 +244,7 @@ export default function CoursesPage() {
         {/* Course Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {courses.map((course) => (
-            <a key={course.id} href={`/courses/${course.id}`}>
+            <Link key={course.id} href={`/courses/${course.id}`}>
               <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer">
               <div className="relative h-48 overflow-hidden">
                 <img 
@@ -301,7 +304,7 @@ export default function CoursesPage() {
                 </Button>
               </CardContent>
               </Card>
-            </a>
+            </Link>
           ))}
         </div>
 
