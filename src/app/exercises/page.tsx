@@ -134,6 +134,678 @@ int main() {
       completed: false
     },
     {
+      id: 'variables-datatypes',
+      title: 'Variables and Data Types',
+      description: 'Practice declaring and using different data types in C++',
+      difficulty: 'beginner',
+      category: 'basics',
+      points: 15,
+      timeEstimate: '8 min',
+      problem: `Write a program that declares variables of different data types and displays their values.
+
+Requirements:
+- Declare an integer variable
+- Declare a floating-point variable
+- Declare a character variable
+- Declare a string variable
+- Display all variables with appropriate labels`,
+      hints: [
+        'Use int for integers, float or double for decimals',
+        'Use char for single characters, string for text',
+        'Remember to include <string> header for string type',
+        'Use cout to display the values'
+      ],
+      solution: `#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    int age = 25;
+    double height = 5.9;
+    char grade = 'A';
+    string name = "John";
+    
+    cout << "Name: " << name << endl;
+    cout << "Age: " << age << endl;
+    cout << "Height: " << height << " feet" << endl;
+    cout << "Grade: " << grade << endl;
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '', output: 'Name: John', requiredConstructs: ['int', 'double', 'char', 'string'] }
+      ],
+      completed: false
+    },
+    {
+      id: 'even-odd',
+      title: 'Even or Odd Checker',
+      description: 'Check if a number is even or odd',
+      difficulty: 'beginner',
+      category: 'basics',
+      points: 15,
+      timeEstimate: '8 min',
+      problem: `Write a program that takes a number as input and determines whether it is even or odd.
+
+Requirements:
+- Take an integer as input
+- Check if it's even or odd using the modulo operator
+- Display the result`,
+      hints: [
+        'Use the modulo operator (%) to check remainder',
+        'If number % 2 == 0, it\'s even',
+        'Otherwise, it\'s odd',
+        'Handle negative numbers if needed'
+      ],
+      solution: `#include <iostream>
+using namespace std;
+
+int main() {
+    int number;
+    cout << "Enter a number: ";
+    cin >> number;
+    
+    if (number % 2 == 0) {
+        cout << number << " is even." << endl;
+    } else {
+        cout << number << " is odd." << endl;
+    }
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '8', output: '8 is even.' },
+        { input: '7', output: '7 is odd.' }
+      ],
+      completed: false
+    },
+    {
+      id: 'largest-three',
+      title: 'Largest of Three Numbers',
+      description: 'Find the largest among three numbers',
+      difficulty: 'beginner',
+      category: 'basics',
+      points: 20,
+      timeEstimate: '12 min',
+      problem: `Write a program that takes three numbers as input and finds the largest among them.
+
+Requirements:
+- Take three numbers as input
+- Compare them to find the largest
+- Display the largest number`,
+      hints: [
+        'Use if-else statements to compare numbers',
+        'You can use nested if statements or logical operators',
+        'Consider using a variable to store the largest value',
+        'Handle the case when all numbers are equal'
+      ],
+      solution: `#include <iostream>
+using namespace std;
+
+int main() {
+    int num1, num2, num3;
+    cout << "Enter three numbers: ";
+    cin >> num1 >> num2 >> num3;
+    
+    int largest = num1;
+    
+    if (num2 > largest) {
+        largest = num2;
+    }
+    if (num3 > largest) {
+        largest = num3;
+    }
+    
+    cout << "Largest number is: " << largest << endl;
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '10 25 15', output: 'Largest number is: 25' },
+        { input: '5 5 5', output: 'Largest number is: 5' }
+      ],
+      completed: false
+    },
+    {
+      id: 'grade-calculator',
+      title: 'Grade Calculator',
+      description: 'Calculate and display grade based on marks',
+      difficulty: 'beginner',
+      category: 'basics',
+      points: 20,
+      timeEstimate: '12 min',
+      problem: `Write a program that takes marks as input and displays the corresponding grade.
+
+Grading System:
+- 90-100: A
+- 80-89: B
+- 70-79: C
+- 60-69: D
+- Below 60: F
+
+Requirements:
+- Take marks as input
+- Determine the grade
+- Display the grade`,
+      hints: [
+        'Use if-else if-else statements',
+        'Check ranges from highest to lowest',
+        'Validate that marks are between 0 and 100',
+        'Use >= for range checking'
+      ],
+      solution: `#include <iostream>
+using namespace std;
+
+int main() {
+    int marks;
+    cout << "Enter marks (0-100): ";
+    cin >> marks;
+    
+    if (marks < 0 || marks > 100) {
+        cout << "Invalid marks! Please enter between 0 and 100." << endl;
+        return 1;
+    }
+    
+    char grade;
+    if (marks >= 90) {
+        grade = 'A';
+    } else if (marks >= 80) {
+        grade = 'B';
+    } else if (marks >= 70) {
+        grade = 'C';
+    } else if (marks >= 60) {
+        grade = 'D';
+    } else {
+        grade = 'F';
+    }
+    
+    cout << "Grade: " << grade << endl;
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '95', output: 'Grade: A' },
+        { input: '75', output: 'Grade: C' },
+        { input: '45', output: 'Grade: F' }
+      ],
+      completed: false
+    },
+    {
+      id: 'sum-numbers',
+      title: 'Sum of Numbers',
+      description: 'Calculate the sum of numbers from 1 to n',
+      difficulty: 'beginner',
+      category: 'basics',
+      points: 20,
+      timeEstimate: '12 min',
+      problem: `Write a program that calculates the sum of all numbers from 1 to n, where n is provided by the user.
+
+Requirements:
+- Take n as input
+- Use a loop to sum numbers from 1 to n
+- Display the sum`,
+      hints: [
+        'Use a for loop to iterate from 1 to n',
+        'Initialize a sum variable to 0',
+        'Add each number to the sum in the loop',
+        'Handle edge case when n is 0 or negative'
+      ],
+      solution: `#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cout << "Enter a number: ";
+    cin >> n;
+    
+    if (n <= 0) {
+        cout << "Please enter a positive number." << endl;
+        return 1;
+    }
+    
+    int sum = 0;
+    for (int i = 1; i <= n; i++) {
+        sum += i;
+    }
+    
+    cout << "Sum of numbers from 1 to " << n << " is: " << sum << endl;
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '5', output: 'Sum of numbers from 1 to 5 is: 15' },
+        { input: '10', output: 'Sum of numbers from 1 to 10 is: 55' }
+      ],
+      completed: false
+    },
+    {
+      id: 'factorial',
+      title: 'Factorial Calculator',
+      description: 'Calculate the factorial of a number',
+      difficulty: 'beginner',
+      category: 'basics',
+      points: 25,
+      timeEstimate: '15 min',
+      problem: `Write a program that calculates the factorial of a given number.
+
+Factorial of n (n!) = n × (n-1) × (n-2) × ... × 2 × 1
+Example: 5! = 5 × 4 × 3 × 2 × 1 = 120
+
+Requirements:
+- Take a number as input
+- Calculate its factorial
+- Display the result`,
+      hints: [
+        'Use a loop to multiply numbers from 1 to n',
+        'Initialize result to 1 (not 0)',
+        'Factorial of 0 is 1',
+        'Use long long for larger factorials to avoid overflow'
+      ],
+      solution: `#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cout << "Enter a number: ";
+    cin >> n;
+    
+    if (n < 0) {
+        cout << "Factorial is not defined for negative numbers." << endl;
+        return 1;
+    }
+    
+    long long factorial = 1;
+    for (int i = 1; i <= n; i++) {
+        factorial *= i;
+    }
+    
+    cout << "Factorial of " << n << " is: " << factorial << endl;
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '5', output: 'Factorial of 5 is: 120' },
+        { input: '0', output: 'Factorial of 0 is: 1' }
+      ],
+      completed: false
+    },
+    {
+      id: 'multiplication-table',
+      title: 'Multiplication Table',
+      description: 'Generate multiplication table for a given number',
+      difficulty: 'beginner',
+      category: 'basics',
+      points: 20,
+      timeEstimate: '12 min',
+      problem: `Write a program that generates the multiplication table for a given number.
+
+Requirements:
+- Take a number as input
+- Display its multiplication table from 1 to 10
+- Format the output clearly`,
+      hints: [
+        'Use a for loop from 1 to 10',
+        'Multiply the input number by the loop variable',
+        'Format output for readability',
+        'Use proper spacing in your output'
+      ],
+      solution: `#include <iostream>
+using namespace std;
+
+int main() {
+    int number;
+    cout << "Enter a number: ";
+    cin >> number;
+    
+    cout << "Multiplication table of " << number << ":" << endl;
+    for (int i = 1; i <= 10; i++) {
+        cout << number << " x " << i << " = " << (number * i) << endl;
+    }
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '5', output: '5 x 1 = 5', requiredConstructs: ['for', 'cout'] }
+      ],
+      completed: false
+    },
+    {
+      id: 'reverse-number',
+      title: 'Reverse a Number',
+      description: 'Reverse the digits of a given number',
+      difficulty: 'beginner',
+      category: 'basics',
+      points: 25,
+      timeEstimate: '15 min',
+      problem: `Write a program that reverses the digits of a given number.
+
+Example: If input is 1234, output should be 4321
+
+Requirements:
+- Take a number as input
+- Reverse its digits
+- Display the reversed number`,
+      hints: [
+        'Use modulo operator (%) to get last digit',
+        'Use division (/) to remove last digit',
+        'Build reversed number by multiplying by 10 and adding digits',
+        'Handle negative numbers if needed'
+      ],
+      solution: `#include <iostream>
+using namespace std;
+
+int main() {
+    int number, reversed = 0;
+    cout << "Enter a number: ";
+    cin >> number;
+    
+    int original = number;
+    
+    while (number != 0) {
+        int digit = number % 10;
+        reversed = reversed * 10 + digit;
+        number = number / 10;
+    }
+    
+    cout << "Reversed number: " << reversed << endl;
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '1234', output: 'Reversed number: 4321' },
+        { input: '567', output: 'Reversed number: 765' }
+      ],
+      completed: false
+    },
+    {
+      id: 'palindrome-number',
+      title: 'Palindrome Number Checker',
+      description: 'Check if a number is a palindrome',
+      difficulty: 'beginner',
+      category: 'basics',
+      points: 25,
+      timeEstimate: '15 min',
+      problem: `Write a program that checks if a given number is a palindrome.
+
+A palindrome number reads the same forwards and backwards.
+Example: 121, 1331, 7 are palindromes
+
+Requirements:
+- Take a number as input
+- Check if it's a palindrome
+- Display appropriate message`,
+      hints: [
+        'Reverse the number and compare with original',
+        'You can reuse the reverse logic from previous exercise',
+        'If reversed == original, it\'s a palindrome',
+        'Handle single-digit numbers (they are palindromes)'
+      ],
+      solution: `#include <iostream>
+using namespace std;
+
+int main() {
+    int number;
+    cout << "Enter a number: ";
+    cin >> number;
+    
+    int original = number;
+    int reversed = 0;
+    
+    while (number != 0) {
+        int digit = number % 10;
+        reversed = reversed * 10 + digit;
+        number = number / 10;
+    }
+    
+    if (original == reversed) {
+        cout << original << " is a palindrome." << endl;
+    } else {
+        cout << original << " is not a palindrome." << endl;
+    }
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '121', output: '121 is a palindrome.' },
+        { input: '123', output: '123 is not a palindrome.' }
+      ],
+      completed: false
+    },
+    {
+      id: 'sum-digits',
+      title: 'Sum of Digits',
+      description: 'Calculate the sum of digits in a number',
+      difficulty: 'beginner',
+      category: 'basics',
+      points: 20,
+      timeEstimate: '12 min',
+      problem: `Write a program that calculates the sum of all digits in a given number.
+
+Example: If input is 1234, sum = 1 + 2 + 3 + 4 = 10
+
+Requirements:
+- Take a number as input
+- Extract each digit and sum them
+- Display the sum`,
+      hints: [
+        'Use modulo operator (%) to get last digit',
+        'Use division (/) to remove last digit',
+        'Add each digit to a sum variable',
+        'Continue until number becomes 0'
+      ],
+      solution: `#include <iostream>
+using namespace std;
+
+int main() {
+    int number;
+    cout << "Enter a number: ";
+    cin >> number;
+    
+    int sum = 0;
+    int original = number;
+    
+    while (number != 0) {
+        int digit = number % 10;
+        sum += digit;
+        number = number / 10;
+    }
+    
+    cout << "Sum of digits of " << original << " is: " << sum << endl;
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '1234', output: 'Sum of digits of 1234 is: 10' },
+        { input: '567', output: 'Sum of digits of 567 is: 18' }
+      ],
+      completed: false
+    },
+    {
+      id: 'temperature-converter',
+      title: 'Temperature Converter',
+      description: 'Convert temperature between Celsius and Fahrenheit',
+      difficulty: 'beginner',
+      category: 'basics',
+      points: 25,
+      timeEstimate: '15 min',
+      problem: `Write a program that converts temperature between Celsius and Fahrenheit.
+
+Formulas:
+- Celsius to Fahrenheit: F = (C × 9/5) + 32
+- Fahrenheit to Celsius: C = (F - 32) × 5/9
+
+Requirements:
+- Ask user for conversion type
+- Take temperature value as input
+- Perform conversion and display result`,
+      hints: [
+        'Use a menu or ask user for conversion type',
+        'Use appropriate data type (float or double) for decimals',
+        'Apply the correct formula based on conversion type',
+        'Format output to show appropriate decimal places'
+      ],
+      solution: `#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main() {
+    int choice;
+    double temperature, result;
+    
+    cout << "Temperature Converter" << endl;
+    cout << "1. Celsius to Fahrenheit" << endl;
+    cout << "2. Fahrenheit to Celsius" << endl;
+    cout << "Enter your choice (1 or 2): ";
+    cin >> choice;
+    
+    cout << "Enter temperature: ";
+    cin >> temperature;
+    
+    if (choice == 1) {
+        result = (temperature * 9.0 / 5.0) + 32;
+        cout << fixed << setprecision(2);
+        cout << temperature << " Celsius = " << result << " Fahrenheit" << endl;
+    } else if (choice == 2) {
+        result = (temperature - 32) * 5.0 / 9.0;
+        cout << fixed << setprecision(2);
+        cout << temperature << " Fahrenheit = " << result << " Celsius" << endl;
+    } else {
+        cout << "Invalid choice!" << endl;
+        return 1;
+    }
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '1\n25', output: '25.00 Celsius = 77.00 Fahrenheit', requiredConstructs: ['if', 'cin', 'cout'] }
+      ],
+      completed: false
+    },
+    {
+      id: 'area-perimeter',
+      title: 'Area and Perimeter Calculator',
+      description: 'Calculate area and perimeter of rectangle and circle',
+      difficulty: 'beginner',
+      category: 'basics',
+      points: 25,
+      timeEstimate: '15 min',
+      problem: `Write a program that calculates area and perimeter for different shapes.
+
+For Rectangle:
+- Area = length × width
+- Perimeter = 2 × (length + width)
+
+For Circle:
+- Area = π × radius²
+- Perimeter (Circumference) = 2 × π × radius
+
+Requirements:
+- Ask user to choose shape
+- Take required measurements as input
+- Calculate and display area and perimeter`,
+      hints: [
+        'Use a menu to select shape',
+        'Use π = 3.14159 or include <cmath> and use M_PI',
+        'Use appropriate formulas for each shape',
+        'Use double or float for decimal calculations'
+      ],
+      solution: `#include <iostream>
+#include <cmath>
+#include <iomanip>
+using namespace std;
+
+int main() {
+    int choice;
+    cout << "Shape Calculator" << endl;
+    cout << "1. Rectangle" << endl;
+    cout << "2. Circle" << endl;
+    cout << "Enter your choice (1 or 2): ";
+    cin >> choice;
+    
+    if (choice == 1) {
+        double length, width;
+        cout << "Enter length: ";
+        cin >> length;
+        cout << "Enter width: ";
+        cin >> width;
+        
+        double area = length * width;
+        double perimeter = 2 * (length + width);
+        
+        cout << fixed << setprecision(2);
+        cout << "Area: " << area << endl;
+        cout << "Perimeter: " << perimeter << endl;
+    } else if (choice == 2) {
+        double radius;
+        cout << "Enter radius: ";
+        cin >> radius;
+        
+        double area = M_PI * radius * radius;
+        double perimeter = 2 * M_PI * radius;
+        
+        cout << fixed << setprecision(2);
+        cout << "Area: " << area << endl;
+        cout << "Circumference: " << perimeter << endl;
+    } else {
+        cout << "Invalid choice!" << endl;
+        return 1;
+    }
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '1\n5\n3', output: 'Area: 15.00', requiredConstructs: ['if', 'cin', 'cout'] }
+      ],
+      completed: false
+    },
+    {
+      id: 'count-vowels',
+      title: 'Count Vowels in String',
+      description: 'Count the number of vowels in a string',
+      difficulty: 'beginner',
+      category: 'basics',
+      points: 25,
+      timeEstimate: '15 min',
+      problem: `Write a program that counts the number of vowels (a, e, i, o, u) in a given string.
+
+Requirements:
+- Take a string as input
+- Count vowels (both uppercase and lowercase)
+- Display the count`,
+      hints: [
+        'Include <string> header for string operations',
+        'Use a loop to iterate through each character',
+        'Check if character is a vowel (a, e, i, o, u)',
+        'Handle both uppercase and lowercase letters'
+      ],
+      solution: `#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string text;
+    cout << "Enter a string: ";
+    getline(cin, text);
+    
+    int vowelCount = 0;
+    
+    for (int i = 0; i < text.length(); i++) {
+        char ch = tolower(text[i]);
+        if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') {
+            vowelCount++;
+        }
+    }
+    
+    cout << "Number of vowels: " << vowelCount << endl;
+    
+    return 0;
+}`,
+      testCases: [
+        { input: 'Hello World', output: 'Number of vowels: 3', requiredConstructs: ['for', 'string'] }
+      ],
+      completed: false
+    },
+    {
       id: 'fibonacci',
       title: 'Fibonacci Sequence',
       description: 'Generate the Fibonacci sequence up to n terms',

@@ -19,7 +19,12 @@ export interface PracticeExercise {
   difficulty: 'easy' | 'medium' | 'hard';
   hints: string[];
   solution: string;
-  testCases: { input: string; output: string }[];
+  testCases: { 
+    input: string; 
+    output?: string; 
+    requiredConstructs?: string[];
+    outputPattern?: string;
+  }[];
 }
 
 export interface Project {
