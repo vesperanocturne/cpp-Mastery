@@ -21,6 +21,11 @@
       "static/chunks/main-app.js",
       "static/chunks/app/courses/[courseId]/page.js"
     ],
+    "/lessons/[lessonId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/lessons/[lessonId]/page.js"
+    ],
     "/exercises/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
