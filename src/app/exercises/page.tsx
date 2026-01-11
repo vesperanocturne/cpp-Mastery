@@ -4404,7 +4404,7 @@ Requirements:
         'insert: traverse/create nodes for each character, mark last node as end',
         'search: traverse nodes, check if word exists and ends at a word',
         'startsWith: traverse nodes, return true if prefix path exists',
-        'Use character - 'a' to convert to index (0-25)'
+        'Use character - \'a\' to convert to index (0-25)'
       ],
       solution: `#include <iostream>
 #include <vector>
