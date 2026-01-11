@@ -3179,6 +3179,503 @@ int main() {
         { input: '', output: 'Cache state (most recent first):', requiredConstructs: ['class', 'struct', 'unordered_map', 'pointer'] }
       ],
       completed: false
+    },
+    {
+      id: 'quick-sort',
+      title: 'Quick Sort Algorithm',
+      description: 'Implement quick sort using partition and recursion',
+      difficulty: 'advanced',
+      category: 'algorithms',
+      points: 65,
+      timeEstimate: '45 min',
+      problem: `Implement the Quick Sort algorithm using divide and conquer.
+
+Quick Sort picks a pivot element and partitions the array around the pivot.
+
+Algorithm:
+1. Choose a pivot element
+2. Partition: Rearrange array so elements < pivot are left, > pivot are right
+3. Recursively sort left and right partitions
+
+Requirements:
+- Take array size and elements as input
+- Sort using quick sort algorithm
+- Display the sorted array
+- Average time complexity: O(n log n)`,
+      hints: [
+        'Choose pivot (first, last, or middle element)',
+        'Partition: move elements smaller than pivot to left, larger to right',
+        'Use two pointers: one from start, one from end',
+        'Recursively sort left and right partitions',
+        'Base case: array size <= 1',
+        'Partition function returns pivot position'
+      ],
+      solution: `#include <iostream>
+using namespace std;
+
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = low - 1;
+    
+    for (int j = low; j < high; j++) {
+        if (arr[j] <= pivot) {
+            i++;
+            // Swap arr[i] and arr[j]
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    }
+    
+    // Swap arr[i+1] and arr[high] (pivot)
+    int temp = arr[i + 1];
+    arr[i + 1] = arr[high];
+    arr[high] = temp;
+    
+    return i + 1;
+}
+
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+int main() {
+    int n;
+    cout << "Enter array size: ";
+    cin >> n;
+    
+    int arr[n];
+    cout << "Enter " << n << " elements: ";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    
+    cout << "\\nOriginal array: ";
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+    
+    quickSort(arr, 0, n - 1);
+    
+    cout << "Sorted array: ";
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '6\n64 34 25 12 22 11', output: 'Sorted array: 11 12 22 25 34 64' }
+      ],
+      completed: false
+    },
+    {
+      id: 'depth-first-search',
+      title: 'Depth-First Search (DFS)',
+      description: 'Implement DFS algorithm to traverse a graph',
+      difficulty: 'advanced',
+      category: 'algorithms',
+      points: 60,
+      timeEstimate: '40 min',
+      problem: `Implement Depth-First Search (DFS) algorithm to traverse a graph.
+
+DFS explores as far as possible along each branch before backtracking.
+
+Algorithm:
+1. Start from a source node
+2. Mark node as visited
+3. Recursively visit all unvisited neighbors
+4. Backtrack when no more unvisited neighbors
+
+Requirements:
+- Represent graph using adjacency list
+- Implement DFS starting from a given node
+- Display the order of node visits
+- Use recursion or stack`,
+      hints: [
+        'Use recursion for elegant implementation',
+        'Use a visited array to track visited nodes',
+        'Mark node as visited when first encountered',
+        'Recursively call DFS on all unvisited neighbors',
+        'For iterative version, use a stack',
+        'DFS explores one path completely before backtracking'
+      ],
+      solution: `#include <iostream>
+#include <vector>
+using namespace std;
+
+void DFS(vector<vector<int>>& graph, int node, vector<bool>& visited) {
+    visited[node] = true;
+    cout << node << " ";
+    
+    for (int neighbor : graph[node]) {
+        if (!visited[neighbor]) {
+            DFS(graph, neighbor, visited);
+        }
+    }
+}
+
+int main() {
+    int n, edges;
+    cout << "Enter number of nodes: ";
+    cin >> n;
+    cout << "Enter number of edges: ";
+    cin >> edges;
+    
+    vector<vector<int>> graph(n);
+    
+    cout << "Enter edges (format: node1 node2):" << endl;
+    for (int i = 0; i < edges; i++) {
+        int u, v;
+        cin >> u >> v;
+        graph[u].push_back(v);
+        graph[v].push_back(u); // For undirected graph
+    }
+    
+    int start;
+    cout << "Enter starting node: ";
+    cin >> start;
+    
+    vector<bool> visited(n, false);
+    
+    cout << "DFS traversal starting from node " << start << ": ";
+    DFS(graph, start, visited);
+    cout << endl;
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '5 4\n0 1\n0 2\n1 3\n2 4\n0', output: 'DFS traversal starting from node 0:', requiredConstructs: ['vector', 'recursion'] }
+      ],
+      completed: false
+    },
+    {
+      id: 'heap-implementation',
+      title: 'Min Heap Implementation',
+      description: 'Implement a min heap data structure with insert and extract operations',
+      difficulty: 'advanced',
+      category: 'data-structures',
+      points: 70,
+      timeEstimate: '50 min',
+      problem: `Implement a Min Heap data structure.
+
+A Min Heap is a complete binary tree where parent nodes are always smaller than or equal to their children.
+
+Operations to implement:
+- insert(value): Insert a value maintaining heap property
+- extractMin(): Remove and return minimum element
+- getMin(): Return minimum without removing
+- display(): Show heap structure
+
+Heap Property: Parent <= Children
+
+Requirements:
+- Use array-based representation
+- Maintain heap property after each operation
+- Implement heapify operations`,
+      hints: [
+        'Use array: parent at i, children at 2*i+1 and 2*i+2',
+        'For insert: add at end, bubble up (compare with parent)',
+        'For extractMin: replace root with last element, bubble down',
+        'Bubble up: swap with parent if smaller',
+        'Bubble down: swap with smaller child if larger',
+        'Index calculations: parent = (i-1)/2, left = 2*i+1, right = 2*i+2'
+      ],
+      solution: `#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+class MinHeap {
+private:
+    vector<int> heap;
+    
+    void heapifyUp(int index) {
+        while (index > 0) {
+            int parent = (index - 1) / 2;
+            if (heap[parent] <= heap[index]) {
+                break;
+            }
+            swap(heap[parent], heap[index]);
+            index = parent;
+        }
+    }
+    
+    void heapifyDown(int index) {
+        int smallest = index;
+        int left = 2 * index + 1;
+        int right = 2 * index + 2;
+        
+        if (left < heap.size() && heap[left] < heap[smallest]) {
+            smallest = left;
+        }
+        
+        if (right < heap.size() && heap[right] < heap[smallest]) {
+            smallest = right;
+        }
+        
+        if (smallest != index) {
+            swap(heap[index], heap[smallest]);
+            heapifyDown(smallest);
+        }
+    }
+
+public:
+    void insert(int value) {
+        heap.push_back(value);
+        heapifyUp(heap.size() - 1);
+        cout << value << " inserted into heap" << endl;
+    }
+    
+    int extractMin() {
+        if (heap.empty()) {
+            cout << "Heap is empty!" << endl;
+            return -1;
+        }
+        
+        int min = heap[0];
+        heap[0] = heap.back();
+        heap.pop_back();
+        
+        if (!heap.empty()) {
+            heapifyDown(0);
+        }
+        
+        return min;
+    }
+    
+    int getMin() {
+        if (heap.empty()) {
+            cout << "Heap is empty!" << endl;
+            return -1;
+        }
+        return heap[0];
+    }
+    
+    void display() {
+        if (heap.empty()) {
+            cout << "Heap is empty" << endl;
+            return;
+        }
+        cout << "Heap: ";
+        for (int i = 0; i < heap.size(); i++) {
+            cout << heap[i] << " ";
+        }
+        cout << endl;
+    }
+    
+    bool isEmpty() {
+        return heap.empty();
+    }
+};
+
+int main() {
+    MinHeap heap;
+    
+    heap.insert(50);
+    heap.insert(30);
+    heap.insert(20);
+    heap.insert(40);
+    heap.insert(10);
+    
+    heap.display();
+    
+    cout << "Minimum: " << heap.getMin() << endl;
+    cout << "Extracted: " << heap.extractMin() << endl;
+    heap.display();
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '', output: '10 inserted into heap', requiredConstructs: ['class', 'vector'] }
+      ],
+      completed: false
+    },
+    {
+      id: 'string-palindrome',
+      title: 'String Palindrome Checker',
+      description: 'Check if a string is a palindrome using different methods',
+      difficulty: 'beginner',
+      category: 'basics',
+      points: 25,
+      timeEstimate: '15 min',
+      problem: `Write a program that checks if a given string is a palindrome.
+
+A palindrome reads the same forwards and backwards (ignoring case and spaces).
+Examples: "racecar", "A man a plan a canal Panama", "level"
+
+Requirements:
+- Take a string as input
+- Check if it's a palindrome
+- Ignore case differences
+- Optionally ignore spaces and punctuation
+- Display appropriate message`,
+      hints: [
+        'Compare characters from start and end moving towards center',
+        'Convert to lowercase for case-insensitive comparison',
+        'Use two pointers: one from start, one from end',
+        'Skip spaces and punctuation if needed',
+        'Stop when pointers meet or cross'
+      ],
+      solution: `#include <iostream>
+#include <string>
+#include <algorithm>
+#include <cctype>
+using namespace std;
+
+bool isPalindrome(string str) {
+    // Remove spaces and convert to lowercase
+    string cleaned = "";
+    for (char c : str) {
+        if (isalnum(c)) {
+            cleaned += tolower(c);
+        }
+    }
+    
+    int left = 0;
+    int right = cleaned.length() - 1;
+    
+    while (left < right) {
+        if (cleaned[left] != cleaned[right]) {
+            return false;
+        }
+        left++;
+        right--;
+    }
+    
+    return true;
+}
+
+int main() {
+    string input;
+    cout << "Enter a string: ";
+    getline(cin, input);
+    
+    if (isPalindrome(input)) {
+        cout << "\\"" << input << "\\" is a palindrome." << endl;
+    } else {
+        cout << "\\"" << input << "\\" is not a palindrome." << endl;
+    }
+    
+    return 0;
+}`,
+      testCases: [
+        { input: 'racecar', output: 'racecar" is a palindrome.' },
+        { input: 'hello', output: 'hello" is not a palindrome.' }
+      ],
+      completed: false
+    },
+    {
+      id: 'dijkstra-shortest-path',
+      title: 'Dijkstra\'s Shortest Path Algorithm',
+      description: 'Implement Dijkstra\'s algorithm to find shortest paths in a weighted graph',
+      difficulty: 'advanced',
+      category: 'algorithms',
+      points: 80,
+      timeEstimate: '60 min',
+      problem: `Implement Dijkstra's algorithm to find the shortest path from a source node to all other nodes in a weighted graph.
+
+Dijkstra's algorithm finds shortest paths from a source to all vertices in a weighted graph with non-negative edge weights.
+
+Algorithm:
+1. Initialize distances: source = 0, all others = infinity
+2. Use priority queue (min heap) to select unvisited node with minimum distance
+3. For each neighbor, update distance if shorter path found
+4. Mark node as visited
+5. Repeat until all nodes visited
+
+Requirements:
+- Represent weighted graph using adjacency list
+- Find shortest distances from source to all nodes
+- Display shortest distances
+- Handle non-negative weights only`,
+      hints: [
+        'Use priority queue (min heap) to get node with minimum distance',
+        'Maintain distance array: dist[i] = shortest distance from source to i',
+        'Initialize: dist[source] = 0, others = INT_MAX',
+        'For each node, relax all edges (update distances if shorter)',
+        'Use visited array to avoid revisiting nodes',
+        'Priority queue stores (distance, node) pairs',
+        'Update distance if: dist[u] + weight < dist[v]'
+      ],
+      solution: `#include <iostream>
+#include <vector>
+#include <queue>
+#include <climits>
+using namespace std;
+
+void dijkstra(vector<vector<pair<int, int>>>& graph, int source, int n) {
+    vector<int> dist(n, INT_MAX);
+    vector<bool> visited(n, false);
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    
+    dist[source] = 0;
+    pq.push({0, source});
+    
+    while (!pq.empty()) {
+        int u = pq.top().second;
+        pq.pop();
+        
+        if (visited[u]) continue;
+        visited[u] = true;
+        
+        for (auto edge : graph[u]) {
+            int v = edge.first;
+            int weight = edge.second;
+            
+            if (!visited[v] && dist[u] + weight < dist[v]) {
+                dist[v] = dist[u] + weight;
+                pq.push({dist[v], v});
+            }
+        }
+    }
+    
+    cout << "Shortest distances from node " << source << ":" << endl;
+    for (int i = 0; i < n; i++) {
+        if (dist[i] == INT_MAX) {
+            cout << "Node " << i << ": INF" << endl;
+        } else {
+            cout << "Node " << i << ": " << dist[i] << endl;
+        }
+    }
+}
+
+int main() {
+    int n, edges;
+    cout << "Enter number of nodes: ";
+    cin >> n;
+    cout << "Enter number of edges: ";
+    cin >> edges;
+    
+    vector<vector<pair<int, int>>> graph(n);
+    
+    cout << "Enter edges (format: node1 node2 weight):" << endl;
+    for (int i = 0; i < edges; i++) {
+        int u, v, w;
+        cin >> u >> v >> w;
+        graph[u].push_back({v, w});
+        graph[v].push_back({u, w}); // For undirected graph
+    }
+    
+    int source;
+    cout << "Enter source node: ";
+    cin >> source;
+    
+    dijkstra(graph, source, n);
+    
+    return 0;
+}`,
+      testCases: [
+        { input: '5 7\n0 1 4\n0 2 1\n1 2 2\n1 3 5\n2 3 8\n2 4 9\n3 4 2\n0', output: 'Shortest distances from node 0:', requiredConstructs: ['vector', 'priority_queue', 'algorithm'] }
+      ],
+      completed: false
     }
   ];
 
