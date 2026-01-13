@@ -5232,7 +5232,10 @@ int main() {
                           <h4 className="font-medium text-slate-900 dark:text-slate-100 mb-2">Test Cases:</h4>
                           <div className="space-y-2">
                             {exercise.testCases.map((testCase, index) => (
-                              <div key={index} className="bg-slate-100 dark:bg-slate-800 p-3 rounded text-sm">
+                              <div
+                                key={index}
+                                className="bg-slate-100 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 p-3 rounded text-sm text-slate-700 dark:text-slate-200"
+                              >
                                 <div><strong>Input:</strong> {testCase.input || 'None'}</div>
                                 {testCase.output && (
                                   <div><strong>Expected Output:</strong> {testCase.output}</div>
